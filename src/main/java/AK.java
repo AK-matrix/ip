@@ -2,11 +2,12 @@ import java.util.Scanner;
 
 /**
  * AK is a chatbot that allows for basic interaction with the user.
- * It currently supports greeting, adding tasks, listing tasks, and exiting.
+ * It currently supports greeting, adding tasks, listing tasks, marking tasks as
+ * done/not done, and exiting.
  */
 public class AK {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
-    private static final String[] tasks = new String[100];
+    private static final Task[] tasks = new Task[100];
     private static int taskCount = 0;
 
     /**
@@ -21,10 +22,25 @@ public class AK {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            if (input.equals("bye")) {
+            String[] parts = input.split(" ", 2); // Split command and arguments
+            String command = parts[0];
+
+            if (command.equals("bye")) {
                 break;
-            } else if (input.equals("list")) {
+            } else if (command.equals("list")) {
                 listTasks();
+            } else if (command.equals("mark")) {
+                if (parts.length > 1) {
+                    markTask(parts[1]);
+                } else {
+                    printOutput("Please specify the task number to mark.");
+                }
+            } else if (command.equals("unmark")) {
+                if (parts.length > 1) {
+                    unmarkTask(parts[1]);
+                } else {
+                    printOutput("Please specify the task number to unmark.");
+                }
             } else {
                 addTask(input);
             }
@@ -51,26 +67,64 @@ public class AK {
     /**
      * Adds a task to the list and confirms the addition to the user.
      *
-     * @param task The task description to add.
+     * @param taskDescription The task description to add.
      */
-    public static void addTask(String task) {
-        tasks[taskCount] = task;
+    public static void addTask(String taskDescription) {
+        tasks[taskCount] = new Task(taskDescription);
         taskCount++;
-        printOutput("added: " + task);
+        printOutput("added: " + taskDescription);
     }
 
     /**
      * Lists all tasks currently in the list.
      */
     public static void listTasks() {
-        StringBuilder listOutput = new StringBuilder();
+        StringBuilder listOutput = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < taskCount; i++) {
-            listOutput.append(i + 1).append(". ").append(tasks[i]);
+            listOutput.append(i + 1).append(".").append(tasks[i]);
             if (i < taskCount - 1) {
                 listOutput.append("\n");
             }
         }
         printOutput(listOutput.toString());
+    }
+
+    /**
+     * Marks a task as done based on the provided index.
+     *
+     * @param info The 1-based index of the task to mark.
+     */
+    public static void markTask(String info) {
+        try {
+            int index = Integer.parseInt(info) - 1;
+            if (index >= 0 && index < taskCount) {
+                tasks[index].markAsDone();
+                printOutput("Nice! I've marked this task as done:\n  " + tasks[index]);
+            } else {
+                printOutput("Task number is out of range.");
+            }
+        } catch (NumberFormatException e) {
+            printOutput("Please enter a valid task number.");
+        }
+    }
+
+    /**
+     * Marks a task as not done based on the provided index.
+     *
+     * @param info The 1-based index of the task to unmark.
+     */
+    public static void unmarkTask(String info) {
+        try {
+            int index = Integer.parseInt(info) - 1;
+            if (index >= 0 && index < taskCount) {
+                tasks[index].markAsNotDone();
+                printOutput("OK, I've marked this task as not done yet:\n  " + tasks[index]);
+            } else {
+                printOutput("Task number is out of range.");
+            }
+        } catch (NumberFormatException e) {
+            printOutput("Please enter a valid task number.");
+        }
     }
 
     /**
