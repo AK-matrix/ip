@@ -22,65 +22,98 @@ public class AK {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            String[] parts = input.split(" ", 2); // Split command and arguments
-            String command = parts[0];
 
-            if (command.equals("bye")) {
-                break;
-            } else if (command.equals("list")) {
-                listTasks();
-            } else if (command.equals("mark")) {
-                if (parts.length > 1) {
-                    markTask(parts[1]);
-                } else {
-                    printOutput("Please specify the task number to mark.");
+            try {
+                if (input.equals("bye")) {
+                    break;
                 }
-            } else if (command.equals("unmark")) {
-                if (parts.length > 1) {
-                    unmarkTask(parts[1]);
-                } else {
-                    printOutput("Please specify the task number to unmark.");
-                }
-            } else if (command.equals("todo")) {
-                if (parts.length > 1) {
-                    addTask(new Todo(parts[1]));
-                } else {
-                    printOutput("The description of a todo cannot be empty.");
-                }
-            } else if (command.equals("deadline")) {
-                if (parts.length > 1) {
-                    String[] deadlineParts = parts[1].split(" /by ", 2);
-                    if (deadlineParts.length == 2) {
-                        addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
-                    } else {
-                        printOutput("Usage: deadline <description> /by <date/time>");
-                    }
-                } else {
-                    printOutput("The description of a deadline cannot be empty.");
-                }
-            } else if (command.equals("event")) {
-                if (parts.length > 1) {
-                    String[] eventParts = parts[1].split(" /from ", 2);
-                    if (eventParts.length == 2) {
-                        String[] timeParts = eventParts[1].split(" /to ", 2);
-                        if (timeParts.length == 2) {
-                            addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
-                        } else {
-                            printOutput("Usage: event <description> /from <start> /to <end>");
-                        }
-                    } else {
-                        printOutput("Usage: event <description> /from <start> /to <end>");
-                    }
-                } else {
-                    printOutput("The description of an event cannot be empty.");
-                }
-            } else {
-                printOutput("Unknown command. Please try again.");
+                processCommand(input);
+            } catch (AkException e) {
+                printOutput("OOPS!!! " + e.getMessage());
             }
         }
 
         exit();
         scanner.close();
+    }
+
+    /**
+     * Processes the user command and executes the corresponding action.
+     *
+     * @param input The full user input string.
+     * @throws AkException If the command is invalid or arguments are missing.
+     */
+    public static void processCommand(String input) throws AkException {
+        String[] parts = input.split(" ", 2); // Split command and arguments
+        String command = parts[0];
+
+        if (command.equals("list")) {
+            listTasks();
+            return;
+        }
+
+        if (command.equals("mark")) {
+            if (parts.length > 1) {
+                markTask(parts[1]);
+            } else {
+                throw new AkException("Please specify the task number to mark.");
+            }
+            return;
+        }
+
+        if (command.equals("unmark")) {
+            if (parts.length > 1) {
+                unmarkTask(parts[1]);
+            } else {
+                throw new AkException("Please specify the task number to unmark.");
+            }
+            return;
+        }
+
+        if (command.equals("todo")) {
+            if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+                addTask(new Todo(parts[1]));
+            } else {
+                throw new AkException("The description of a todo cannot be empty.");
+            }
+            return;
+        }
+
+        if (command.equals("deadline")) {
+            if (parts.length > 1) {
+                String[] deadlineParts = parts[1].split(" /by ", 2);
+                if (deadlineParts.length == 2 && !deadlineParts[0].trim().isEmpty()
+                        && !deadlineParts[1].trim().isEmpty()) {
+                    addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
+                } else {
+                    throw new AkException("Usage: deadline <description> /by <date/time>");
+                }
+            } else {
+                throw new AkException("The description of a deadline cannot be empty.");
+            }
+            return;
+        }
+
+        if (command.equals("event")) {
+            if (parts.length > 1) {
+                String[] eventParts = parts[1].split(" /from ", 2);
+                if (eventParts.length == 2 && !eventParts[0].trim().isEmpty()) {
+                    String[] timeParts = eventParts[1].split(" /to ", 2);
+                    if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
+                        addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
+                    } else {
+                        throw new AkException("Usage: event <description> /from <start> /to <end>");
+                    }
+                } else {
+                    throw new AkException("Usage: event <description> /from <start> /to <end>");
+                }
+            } else {
+                throw new AkException("The description of an event cannot be empty.");
+            }
+            return;
+        }
+
+        throw new AkException("I'm sorry, but I don't know what that means :-(");
     }
 
     /**
@@ -127,18 +160,19 @@ public class AK {
      * Marks a task as done based on the provided index.
      *
      * @param info The 1-based index of the task to mark.
+     * @throws AkException If the task number is invalid.
      */
-    public static void markTask(String info) {
+    public static void markTask(String info) throws AkException {
         try {
             int index = Integer.parseInt(info) - 1;
             if (index >= 0 && index < taskCount) {
                 tasks[index].markAsDone();
                 printOutput("Nice! I've marked this task as done:\n  " + tasks[index]);
             } else {
-                printOutput("Task number is out of range.");
+                throw new AkException("Task number is out of range.");
             }
         } catch (NumberFormatException e) {
-            printOutput("Please enter a valid task number.");
+            throw new AkException("Please enter a valid task number.");
         }
     }
 
@@ -146,18 +180,19 @@ public class AK {
      * Marks a task as not done based on the provided index.
      *
      * @param info The 1-based index of the task to unmark.
+     * @throws AkException If the task number is invalid.
      */
-    public static void unmarkTask(String info) {
+    public static void unmarkTask(String info) throws AkException {
         try {
             int index = Integer.parseInt(info) - 1;
             if (index >= 0 && index < taskCount) {
                 tasks[index].markAsNotDone();
                 printOutput("OK, I've marked this task as not done yet:\n  " + tasks[index]);
             } else {
-                printOutput("Task number is out of range.");
+                throw new AkException("Task number is out of range.");
             }
         } catch (NumberFormatException e) {
-            printOutput("Please enter a valid task number.");
+            throw new AkException("Please enter a valid task number.");
         }
     }
 
