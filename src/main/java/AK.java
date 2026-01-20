@@ -45,84 +45,80 @@ public class AK {
      */
     public static void processCommand(String input) throws AkException {
         String[] parts = input.split(" ", 2); // Split command and arguments
-        String command = parts[0];
+        String commandString = parts[0].toUpperCase();
 
-        if (command.equals("list")) {
-            listTasks();
-            return;
+        Command command;
+        try {
+            command = Command.valueOf(commandString);
+        } catch (IllegalArgumentException e) {
+            throw new AkException("I'm sorry, but I don't know what that means :-(");
         }
 
-        if (command.equals("mark")) {
-            if (parts.length > 1) {
-                markTask(parts[1]);
-            } else {
-                throw new AkException("Please specify the task number to mark.");
-            }
-            return;
-        }
-
-        if (command.equals("unmark")) {
-            if (parts.length > 1) {
-                unmarkTask(parts[1]);
-            } else {
-                throw new AkException("Please specify the task number to unmark.");
-            }
-            return;
-        }
-
-        if (command.equals("delete")) {
-            if (parts.length > 1) {
-                deleteTask(parts[1]);
-            } else {
-                throw new AkException("Please specify the task number to delete.");
-            }
-            return;
-        }
-
-        if (command.equals("todo")) {
-            if (parts.length > 1 && !parts[1].trim().isEmpty()) {
-                addTask(new Todo(parts[1]));
-            } else {
-                throw new AkException("The description of a todo cannot be empty.");
-            }
-            return;
-        }
-
-        if (command.equals("deadline")) {
-            if (parts.length > 1) {
-                String[] deadlineParts = parts[1].split(" /by ", 2);
-                if (deadlineParts.length == 2 && !deadlineParts[0].trim().isEmpty()
-                        && !deadlineParts[1].trim().isEmpty()) {
-                    addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
+        switch (command) {
+            case LIST:
+                listTasks();
+                break;
+            case MARK:
+                if (parts.length > 1) {
+                    markTask(parts[1]);
                 } else {
-                    throw new AkException("Usage: deadline <description> /by <date/time>");
+                    throw new AkException("Please specify the task number to mark.");
                 }
-            } else {
-                throw new AkException("The description of a deadline cannot be empty.");
-            }
-            return;
-        }
-
-        if (command.equals("event")) {
-            if (parts.length > 1) {
-                String[] eventParts = parts[1].split(" /from ", 2);
-                if (eventParts.length == 2 && !eventParts[0].trim().isEmpty()) {
-                    String[] timeParts = eventParts[1].split(" /to ", 2);
-                    if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
-                        addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
+                break;
+            case UNMARK:
+                if (parts.length > 1) {
+                    unmarkTask(parts[1]);
+                } else {
+                    throw new AkException("Please specify the task number to unmark.");
+                }
+                break;
+            case DELETE:
+                if (parts.length > 1) {
+                    deleteTask(parts[1]);
+                } else {
+                    throw new AkException("Please specify the task number to delete.");
+                }
+                break;
+            case TODO:
+                if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+                    addTask(new Todo(parts[1]));
+                } else {
+                    throw new AkException("The description of a todo cannot be empty.");
+                }
+                break;
+            case DEADLINE:
+                if (parts.length > 1) {
+                    String[] deadlineParts = parts[1].split(" /by ", 2);
+                    if (deadlineParts.length == 2 && !deadlineParts[0].trim().isEmpty()
+                            && !deadlineParts[1].trim().isEmpty()) {
+                        addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
+                    } else {
+                        throw new AkException("Usage: deadline <description> /by <date/time>");
+                    }
+                } else {
+                    throw new AkException("The description of a deadline cannot be empty.");
+                }
+                break;
+            case EVENT:
+                if (parts.length > 1) {
+                    String[] eventParts = parts[1].split(" /from ", 2);
+                    if (eventParts.length == 2 && !eventParts[0].trim().isEmpty()) {
+                        String[] timeParts = eventParts[1].split(" /to ", 2);
+                        if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
+                            addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
+                        } else {
+                            throw new AkException("Usage: event <description> /from <start> /to <end>");
+                        }
                     } else {
                         throw new AkException("Usage: event <description> /from <start> /to <end>");
                     }
                 } else {
-                    throw new AkException("Usage: event <description> /from <start> /to <end>");
+                    throw new AkException("The description of an event cannot be empty.");
                 }
-            } else {
-                throw new AkException("The description of an event cannot be empty.");
-            }
-            return;
+                break;
+            default:
+                throw new AkException("I'm sorry, but I don't know what that means :-(");
         }
-
-        throw new AkException("I'm sorry, but I don't know what that means :-(");
     }
 
     /**
