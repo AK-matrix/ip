@@ -2,10 +2,12 @@ import java.util.Scanner;
 
 /**
  * AK is a chatbot that allows for basic interaction with the user.
- * It currently supports greeting, echoing commands, and exiting.
+ * It currently supports greeting, adding tasks, listing tasks, and exiting.
  */
 public class AK {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
+    private static final String[] tasks = new String[100];
+    private static int taskCount = 0;
 
     /**
      * Main entry point of the application.
@@ -21,8 +23,11 @@ public class AK {
             String input = scanner.nextLine();
             if (input.equals("bye")) {
                 break;
+            } else if (input.equals("list")) {
+                listTasks();
+            } else {
+                addTask(input);
             }
-            echo(input);
         }
 
         exit();
@@ -44,12 +49,28 @@ public class AK {
     }
 
     /**
-     * Echoes the user's input back to the console with formatting.
+     * Adds a task to the list and confirms the addition to the user.
      *
-     * @param input The user's input string to be echoed.
+     * @param task The task description to add.
      */
-    public static void echo(String input) {
-        printOutput(input);
+    public static void addTask(String task) {
+        tasks[taskCount] = task;
+        taskCount++;
+        printOutput("added: " + task);
+    }
+
+    /**
+     * Lists all tasks currently in the list.
+     */
+    public static void listTasks() {
+        StringBuilder listOutput = new StringBuilder();
+        for (int i = 0; i < taskCount; i++) {
+            listOutput.append(i + 1).append(". ").append(tasks[i]);
+            if (i < taskCount - 1) {
+                listOutput.append("\n");
+            }
+        }
+        printOutput(listOutput.toString());
     }
 
     /**
