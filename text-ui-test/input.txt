@@ -2,15 +2,14 @@ todo read book
 deadline return book /by Sunday
 event project meeting /from Mon 2pm /to 4pm
 list
+delete 2
+list
+delete 1
+list
+delete 5
+delete abc
+delete
 mark 1
-mark 2
-list
+mark 100
 unmark 1
-list
-todo
-deadline
-event
-blah
-mark
-unmark
 bye

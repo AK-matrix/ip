@@ -1,14 +1,14 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * AK is a chatbot that allows for basic interaction with the user.
  * It currently supports greeting, adding tasks (todo, deadline, event),
- * listing tasks, marking tasks as done/not done, and exiting.
+ * listing tasks, marking tasks as done/not done, deleting tasks, and exiting.
  */
 public class AK {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
-    private static final Task[] tasks = new Task[100];
-    private static int taskCount = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     /**
      * Main entry point of the application.
@@ -66,6 +66,15 @@ public class AK {
                 unmarkTask(parts[1]);
             } else {
                 throw new AkException("Please specify the task number to unmark.");
+            }
+            return;
+        }
+
+        if (command.equals("delete")) {
+            if (parts.length > 1) {
+                deleteTask(parts[1]);
+            } else {
+                throw new AkException("Please specify the task number to delete.");
             }
             return;
         }
@@ -136,10 +145,30 @@ public class AK {
      * @param task The task object to add.
      */
     public static void addTask(Task task) {
-        tasks[taskCount] = task;
-        taskCount++;
+        tasks.add(task);
         printOutput(
-                "Got it. I've added this task:\n  " + task + "\n Now you have " + taskCount + " tasks in the list.");
+                "Got it. I've added this task:\n  " + task + "\n Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    /**
+     * Deletes a task from the list based on the provided index.
+     *
+     * @param info The 1-based index of the task to delete.
+     * @throws AkException If the task number is invalid.
+     */
+    public static void deleteTask(String info) throws AkException {
+        try {
+            int index = Integer.parseInt(info) - 1;
+            if (index >= 0 && index < tasks.size()) {
+                Task removedTask = tasks.remove(index);
+                printOutput("Noted. I've removed this task:\n  " + removedTask + "\n Now you have " + tasks.size()
+                        + " tasks in the list.");
+            } else {
+                throw new AkException("Task number is out of range.");
+            }
+        } catch (NumberFormatException e) {
+            throw new AkException("Please enter a valid task number.");
+        }
     }
 
     /**
@@ -147,9 +176,9 @@ public class AK {
      */
     public static void listTasks() {
         StringBuilder listOutput = new StringBuilder("Here are the tasks in your list:\n");
-        for (int i = 0; i < taskCount; i++) {
-            listOutput.append(i + 1).append(".").append(tasks[i]);
-            if (i < taskCount - 1) {
+        for (int i = 0; i < tasks.size(); i++) {
+            listOutput.append(i + 1).append(".").append(tasks.get(i));
+            if (i < tasks.size() - 1) {
                 listOutput.append("\n");
             }
         }
@@ -165,9 +194,9 @@ public class AK {
     public static void markTask(String info) throws AkException {
         try {
             int index = Integer.parseInt(info) - 1;
-            if (index >= 0 && index < taskCount) {
-                tasks[index].markAsDone();
-                printOutput("Nice! I've marked this task as done:\n  " + tasks[index]);
+            if (index >= 0 && index < tasks.size()) {
+                tasks.get(index).markAsDone();
+                printOutput("Nice! I've marked this task as done:\n  " + tasks.get(index));
             } else {
                 throw new AkException("Task number is out of range.");
             }
@@ -185,9 +214,9 @@ public class AK {
     public static void unmarkTask(String info) throws AkException {
         try {
             int index = Integer.parseInt(info) - 1;
-            if (index >= 0 && index < taskCount) {
-                tasks[index].markAsNotDone();
-                printOutput("OK, I've marked this task as not done yet:\n  " + tasks[index]);
+            if (index >= 0 && index < tasks.size()) {
+                tasks.get(index).markAsNotDone();
+                printOutput("OK, I've marked this task as not done yet:\n  " + tasks.get(index));
             } else {
                 throw new AkException("Task number is out of range.");
             }
