@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 /**
  * AK is a chatbot that allows for basic interaction with the user.
- * It currently supports greeting, adding tasks, listing tasks, marking tasks as
- * done/not done, and exiting.
+ * It currently supports greeting, adding tasks (todo, deadline, event),
+ * listing tasks, marking tasks as done/not done, and exiting.
  */
 public class AK {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
@@ -41,8 +41,41 @@ public class AK {
                 } else {
                     printOutput("Please specify the task number to unmark.");
                 }
+            } else if (command.equals("todo")) {
+                if (parts.length > 1) {
+                    addTask(new Todo(parts[1]));
+                } else {
+                    printOutput("The description of a todo cannot be empty.");
+                }
+            } else if (command.equals("deadline")) {
+                if (parts.length > 1) {
+                    String[] deadlineParts = parts[1].split(" /by ", 2);
+                    if (deadlineParts.length == 2) {
+                        addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
+                    } else {
+                        printOutput("Usage: deadline <description> /by <date/time>");
+                    }
+                } else {
+                    printOutput("The description of a deadline cannot be empty.");
+                }
+            } else if (command.equals("event")) {
+                if (parts.length > 1) {
+                    String[] eventParts = parts[1].split(" /from ", 2);
+                    if (eventParts.length == 2) {
+                        String[] timeParts = eventParts[1].split(" /to ", 2);
+                        if (timeParts.length == 2) {
+                            addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
+                        } else {
+                            printOutput("Usage: event <description> /from <start> /to <end>");
+                        }
+                    } else {
+                        printOutput("Usage: event <description> /from <start> /to <end>");
+                    }
+                } else {
+                    printOutput("The description of an event cannot be empty.");
+                }
             } else {
-                addTask(input);
+                printOutput("Unknown command. Please try again.");
             }
         }
 
@@ -67,12 +100,13 @@ public class AK {
     /**
      * Adds a task to the list and confirms the addition to the user.
      *
-     * @param taskDescription The task description to add.
+     * @param task The task object to add.
      */
-    public static void addTask(String taskDescription) {
-        tasks[taskCount] = new Task(taskDescription);
+    public static void addTask(Task task) {
+        tasks[taskCount] = task;
         taskCount++;
-        printOutput("added: " + taskDescription);
+        printOutput(
+                "Got it. I've added this task:\n  " + task + "\n Now you have " + taskCount + " tasks in the list.");
     }
 
     /**
