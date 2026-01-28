@@ -1,255 +1,57 @@
-import java.time.format.DateTimeParseException;
-import java.util.Scanner;
-import java.util.ArrayList;
-
 /**
  * AK is a chatbot that allows for basic interaction with the user.
- * It currently supports greeting, adding tasks, listing tasks,
- * marking tasks, deleting tasks, data persistence, and date/time handling.
+ * It is structured using OOP principles with separate classes for UI, Storage,
+ * TaskList, Parser, and Commands.
  */
 public class AK {
-    private static final String HORIZONTAL_LINE = "____________________________________________________________";
-    private static final String FILE_PATH = "./data/ak.txt";
-    private static ArrayList<Task> tasks;
-    private static Storage storage;
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    /**
+     * Constructs a new AK chatbot instance.
+     *
+     * @param filePath The file path for data storage.
+     */
+    public AK(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (Exception e) {
+            ui.showError("Error loading tasks. Starting with an empty list.");
+            tasks = new TaskList();
+        }
+    }
+
+    /**
+     * Creates and runs the chatbot instance.
+     */
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (AkException e) {
+                ui.showError(e.getMessage());
+            } catch (Exception e) {
+                ui.showError("An unexpected error occurred: " + e.getMessage());
+            }
+        }
+        ui.showExit();
+    }
 
     /**
      * Main entry point of the application.
-     * Initializes the chatbot and handles the user interaction loop.
      *
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        storage = new Storage(FILE_PATH);
-        tasks = storage.load();
-
-        greet();
-
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            String input = scanner.nextLine();
-
-            try {
-                if (input.equals("bye")) {
-                    break;
-                }
-                processCommand(input);
-            } catch (AkException e) {
-                printOutput("OOPS!!! " + e.getMessage());
-            } catch (DateTimeParseException e) {
-                printOutput("OOPS!!! Invalid date/time format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-01 1800).");
-            }
-        }
-
-        exit();
-        scanner.close();
-    }
-
-    /**
-     * Processes the user command and executes the corresponding action.
-     *
-     * @param input The full user input string.
-     * @throws AkException            If the command is invalid or arguments are
-     *                                missing.
-     * @throws DateTimeParseException If date format is invalid.
-     */
-    public static void processCommand(String input) throws AkException {
-        String[] parts = input.split(" ", 2); // Split command and arguments
-        String commandString = parts[0].toUpperCase();
-
-        Command command;
-        try {
-            command = Command.valueOf(commandString);
-        } catch (IllegalArgumentException e) {
-            throw new AkException("I'm sorry, but I don't know what that means :-(");
-        }
-
-        switch (command) {
-            case LIST:
-                listTasks();
-                break;
-            case MARK:
-                if (parts.length > 1) {
-                    markTask(parts[1]);
-                } else {
-                    throw new AkException("Please specify the task number to mark.");
-                }
-                break;
-            case UNMARK:
-                if (parts.length > 1) {
-                    unmarkTask(parts[1]);
-                } else {
-                    throw new AkException("Please specify the task number to unmark.");
-                }
-                break;
-            case DELETE:
-                if (parts.length > 1) {
-                    deleteTask(parts[1]);
-                } else {
-                    throw new AkException("Please specify the task number to delete.");
-                }
-                break;
-            case TODO:
-                if (parts.length > 1 && !parts[1].trim().isEmpty()) {
-                    addTask(new Todo(parts[1]));
-                } else {
-                    throw new AkException("The description of a todo cannot be empty.");
-                }
-                break;
-            case DEADLINE:
-                if (parts.length > 1) {
-                    String[] deadlineParts = parts[1].split(" /by ", 2);
-                    if (deadlineParts.length == 2 && !deadlineParts[0].trim().isEmpty()
-                            && !deadlineParts[1].trim().isEmpty()) {
-                        addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
-                    } else {
-                        throw new AkException("Usage: deadline <description> /by <yyyy-MM-dd HHmm>");
-                    }
-                } else {
-                    throw new AkException("The description of a deadline cannot be empty.");
-                }
-                break;
-            case EVENT:
-                if (parts.length > 1) {
-                    String[] eventParts = parts[1].split(" /from ", 2);
-                    if (eventParts.length == 2 && !eventParts[0].trim().isEmpty()) {
-                        String[] timeParts = eventParts[1].split(" /to ", 2);
-                        if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
-                            addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
-                        } else {
-                            throw new AkException(
-                                    "Usage: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
-                        }
-                    } else {
-                        throw new AkException(
-                                "Usage: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
-                    }
-                } else {
-                    throw new AkException("The description of an event cannot be empty.");
-                }
-                break;
-            default:
-                throw new AkException("I'm sorry, but I don't know what that means :-(");
-        }
-    }
-
-    /**
-     * Prints the welcome message to the console.
-     */
-    public static void greet() {
-        printOutput("Hello! I'm AK\nWhat can I do for you?");
-    }
-
-    /**
-     * Prints the exit message to the console.
-     */
-    public static void exit() {
-        printOutput("Bye. Hope to see you again soon!");
-    }
-
-    /**
-     * Adds a task to the list, saves storage, and confirms inclusion.
-     *
-     * @param task The task object to add.
-     */
-    public static void addTask(Task task) {
-        tasks.add(task);
-        storage.save(tasks);
-        printOutput(
-                "Got it. I've added this task:\n  " + task + "\n Now you have " + tasks.size() + " tasks in the list.");
-    }
-
-    /**
-     * Deletes a task from the list, saves storage, and confirms removal.
-     *
-     * @param info The 1-based index of the task to delete.
-     * @throws AkException If the task number is invalid.
-     */
-    public static void deleteTask(String info) throws AkException {
-        try {
-            int index = Integer.parseInt(info) - 1;
-            if (index >= 0 && index < tasks.size()) {
-                Task removedTask = tasks.remove(index);
-                storage.save(tasks);
-                printOutput("Noted. I've removed this task:\n  " + removedTask + "\n Now you have " + tasks.size()
-                        + " tasks in the list.");
-            } else {
-                throw new AkException("Task number is out of range.");
-            }
-        } catch (NumberFormatException e) {
-            throw new AkException("Please enter a valid task number.");
-        }
-    }
-
-    /**
-     * Lists all tasks currently in the list.
-     */
-    public static void listTasks() {
-        StringBuilder listOutput = new StringBuilder("Here are the tasks in your list:\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            listOutput.append(i + 1).append(".").append(tasks.get(i));
-            if (i < tasks.size() - 1) {
-                listOutput.append("\n");
-            }
-        }
-        printOutput(listOutput.toString());
-    }
-
-    /**
-     * Marks a task as done, saves storage, and confirms.
-     *
-     * @param info The 1-based index of the task to mark.
-     * @throws AkException If the task number is invalid.
-     */
-    public static void markTask(String info) throws AkException {
-        try {
-            int index = Integer.parseInt(info) - 1;
-            if (index >= 0 && index < tasks.size()) {
-                tasks.get(index).markAsDone();
-                storage.save(tasks);
-                printOutput("Nice! I've marked this task as done:\n  " + tasks.get(index));
-            } else {
-                throw new AkException("Task number is out of range.");
-            }
-        } catch (NumberFormatException e) {
-            throw new AkException("Please enter a valid task number.");
-        }
-    }
-
-    /**
-     * Marks a task as not done, saves storage, and confirms.
-     *
-     * @param info The 1-based index of the task to unmark.
-     * @throws AkException If the task number is invalid.
-     */
-    public static void unmarkTask(String info) throws AkException {
-        try {
-            int index = Integer.parseInt(info) - 1;
-            if (index >= 0 && index < tasks.size()) {
-                tasks.get(index).markAsNotDone();
-                storage.save(tasks);
-                printOutput("OK, I've marked this task as not done yet:\n  " + tasks.get(index));
-            } else {
-                throw new AkException("Task number is out of range.");
-            }
-        } catch (NumberFormatException e) {
-            throw new AkException("Please enter a valid task number.");
-        }
-    }
-
-    /**
-     * Prints a message formatted with horizontal lines and indentation.
-     *
-     * @param message The message content to be printed.
-     */
-    public static void printOutput(String message) {
-        System.out.println("    " + HORIZONTAL_LINE);
-        // Handle multi-line messages for consistent indentation
-        String[] lines = message.split("\n");
-        for (String line : lines) {
-            System.out.println("     " + line);
-        }
-        System.out.println("    " + HORIZONTAL_LINE);
-        System.out.println();
+        new AK("./data/ak.txt").run();
     }
 }
