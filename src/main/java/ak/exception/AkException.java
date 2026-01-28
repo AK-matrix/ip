@@ -1,7 +1,7 @@
 package ak.exception;
 
 /**
- * signals that an error has occurred in the AK application.
+ * Signals that an error has occurred in the AK application.
  */
 public class AkException extends Exception {
     /**
