@@ -1,3 +1,10 @@
+package ak.command;
+
+import ak.task.TaskList;
+import ak.ui.Ui;
+import ak.storage.Storage;
+import ak.exception.AkException;
+
 /**
  * Represents an abstract command that can be executed.
  */
