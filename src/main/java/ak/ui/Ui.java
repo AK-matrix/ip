@@ -26,7 +26,7 @@ public class Ui {
     }
 
     /**
-     * Prints the welcome message.
+     * Prints the welcome message to the user.
      */
     public void showWelcome() {
         printOutput("Hello! I'm AK\nWhat can I do for you?");
