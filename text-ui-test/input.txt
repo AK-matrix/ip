@@ -1,6 +1,6 @@
 todo read book
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
+deadline return book /by 2023-12-03 1800
+event project meeting /from 2023-12-04 1400 /to 2023-12-05 1600
 list
 delete 2
 list
@@ -12,4 +12,6 @@ delete
 mark 1
 mark 100
 unmark 1
+deadline invalid date /by 2023-12-03
+event invalid date /from 2023-12-04 /to 2023-12-05
 bye
