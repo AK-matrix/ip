@@ -69,4 +69,18 @@ public class Ui {
         showLine();
         System.out.println();
     }
+
+    /**
+     * Prints the list of tasks found by a search.
+     *
+     * @param tasks The list of matching tasks.
+     */
+    public void showFoundTasks(java.util.ArrayList<ak.task.Task> tasks) {
+        showLine();
+        System.out.println("     Here are the matching tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("     " + (i + 1) + "." + tasks.get(i));
+        }
+        showLine();
+    }
 }
