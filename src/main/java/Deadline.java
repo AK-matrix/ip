@@ -25,4 +25,15 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
+
+    /**
+     * Returns a string representation of the deadline for file storage.
+     * Format: D | status | description | by
+     *
+     * @return The formatted string for storage.
+     */
+    @Override
+    public String toFileString() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+    }
 }
