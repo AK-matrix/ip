@@ -1,10 +1,11 @@
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
  * AK is a chatbot that allows for basic interaction with the user.
  * It currently supports greeting, adding tasks, listing tasks,
- * marking tasks, deleting tasks, and data persistence.
+ * marking tasks, deleting tasks, data persistence, and date/time handling.
  */
 public class AK {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
@@ -35,6 +36,8 @@ public class AK {
                 processCommand(input);
             } catch (AkException e) {
                 printOutput("OOPS!!! " + e.getMessage());
+            } catch (DateTimeParseException e) {
+                printOutput("OOPS!!! Invalid date/time format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-01 1800).");
             }
         }
 
@@ -46,7 +49,9 @@ public class AK {
      * Processes the user command and executes the corresponding action.
      *
      * @param input The full user input string.
-     * @throws AkException If the command is invalid or arguments are missing.
+     * @throws AkException            If the command is invalid or arguments are
+     *                                missing.
+     * @throws DateTimeParseException If date format is invalid.
      */
     public static void processCommand(String input) throws AkException {
         String[] parts = input.split(" ", 2); // Split command and arguments
@@ -98,7 +103,7 @@ public class AK {
                             && !deadlineParts[1].trim().isEmpty()) {
                         addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
                     } else {
-                        throw new AkException("Usage: deadline <description> /by <date/time>");
+                        throw new AkException("Usage: deadline <description> /by <yyyy-MM-dd HHmm>");
                     }
                 } else {
                     throw new AkException("The description of a deadline cannot be empty.");
@@ -112,10 +117,12 @@ public class AK {
                         if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
                             addTask(new Event(eventParts[0], timeParts[0], timeParts[1]));
                         } else {
-                            throw new AkException("Usage: event <description> /from <start> /to <end>");
+                            throw new AkException(
+                                    "Usage: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
                         }
                     } else {
-                        throw new AkException("Usage: event <description> /from <start> /to <end>");
+                        throw new AkException(
+                                "Usage: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
                     }
                 } else {
                     throw new AkException("The description of an event cannot be empty.");
