@@ -1,7 +1,7 @@
 /**
  * Represents a task with a description and a completion status.
  */
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -37,6 +37,13 @@ public class Task {
     public void markAsNotDone() {
         isDone = false;
     }
+
+    /**
+     * Returns a string representation of the task for file storage.
+     *
+     * @return The formatted string for customization.
+     */
+    public abstract String toFileString();
 
     /**
      * Returns a string representation of the task, including its status and

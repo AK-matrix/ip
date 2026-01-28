@@ -3,12 +3,14 @@ import java.util.ArrayList;
 
 /**
  * AK is a chatbot that allows for basic interaction with the user.
- * It currently supports greeting, adding tasks (todo, deadline, event),
- * listing tasks, marking tasks as done/not done, deleting tasks, and exiting.
+ * It currently supports greeting, adding tasks, listing tasks,
+ * marking tasks, deleting tasks, and data persistence.
  */
 public class AK {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
-    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static final String FILE_PATH = "./data/ak.txt";
+    private static ArrayList<Task> tasks;
+    private static Storage storage;
 
     /**
      * Main entry point of the application.
@@ -17,6 +19,9 @@ public class AK {
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
+        storage = new Storage(FILE_PATH);
+        tasks = storage.load();
+
         greet();
 
         Scanner scanner = new Scanner(System.in);
@@ -136,18 +141,19 @@ public class AK {
     }
 
     /**
-     * Adds a task to the list and confirms the addition to the user.
+     * Adds a task to the list, saves storage, and confirms inclusion.
      *
      * @param task The task object to add.
      */
     public static void addTask(Task task) {
         tasks.add(task);
+        storage.save(tasks);
         printOutput(
                 "Got it. I've added this task:\n  " + task + "\n Now you have " + tasks.size() + " tasks in the list.");
     }
 
     /**
-     * Deletes a task from the list based on the provided index.
+     * Deletes a task from the list, saves storage, and confirms removal.
      *
      * @param info The 1-based index of the task to delete.
      * @throws AkException If the task number is invalid.
@@ -157,6 +163,7 @@ public class AK {
             int index = Integer.parseInt(info) - 1;
             if (index >= 0 && index < tasks.size()) {
                 Task removedTask = tasks.remove(index);
+                storage.save(tasks);
                 printOutput("Noted. I've removed this task:\n  " + removedTask + "\n Now you have " + tasks.size()
                         + " tasks in the list.");
             } else {
@@ -182,7 +189,7 @@ public class AK {
     }
 
     /**
-     * Marks a task as done based on the provided index.
+     * Marks a task as done, saves storage, and confirms.
      *
      * @param info The 1-based index of the task to mark.
      * @throws AkException If the task number is invalid.
@@ -192,6 +199,7 @@ public class AK {
             int index = Integer.parseInt(info) - 1;
             if (index >= 0 && index < tasks.size()) {
                 tasks.get(index).markAsDone();
+                storage.save(tasks);
                 printOutput("Nice! I've marked this task as done:\n  " + tasks.get(index));
             } else {
                 throw new AkException("Task number is out of range.");
@@ -202,7 +210,7 @@ public class AK {
     }
 
     /**
-     * Marks a task as not done based on the provided index.
+     * Marks a task as not done, saves storage, and confirms.
      *
      * @param info The 1-based index of the task to unmark.
      * @throws AkException If the task number is invalid.
@@ -212,6 +220,7 @@ public class AK {
             int index = Integer.parseInt(info) - 1;
             if (index >= 0 && index < tasks.size()) {
                 tasks.get(index).markAsNotDone();
+                storage.save(tasks);
                 printOutput("OK, I've marked this task as not done yet:\n  " + tasks.get(index));
             } else {
                 throw new AkException("Task number is out of range.");
