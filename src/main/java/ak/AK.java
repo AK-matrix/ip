@@ -1,3 +1,12 @@
+package ak;
+
+import ak.ui.Ui;
+import ak.storage.Storage;
+import ak.task.TaskList;
+import ak.parser.Parser;
+import ak.command.Command;
+import ak.exception.AkException;
+
 /**
  * AK is a chatbot that allows for basic interaction with the user.
  * It is structured using OOP principles with separate classes for UI, Storage,
@@ -34,6 +43,7 @@ public class AK {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
+                ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
@@ -41,6 +51,14 @@ public class AK {
                 ui.showError(e.getMessage());
             } catch (Exception e) {
                 ui.showError("An unexpected error occurred: " + e.getMessage());
+            } finally {
+                // Keep consistent with original behavior; showLine() was here in example but
+                // Parser/Commands usually print their own lines/output.
+                // However, AK.java main loop in original task description had this.
+                // In my implementation, Commands mostly handle printing wrapped in lines via
+                // Ui.
+                // So I'll remove the extra showLine here to avoid double lines, except for the
+                // input divider line.
             }
         }
         ui.showExit();

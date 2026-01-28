@@ -1,6 +1,15 @@
+package ak.storage;
+
+import ak.task.Task;
+import ak.task.Todo;
+import ak.task.Deadline;
+import ak.task.Event;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,6 +60,7 @@ public class Storage {
                 String description = parts[2];
 
                 Task task = null;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
                 switch (type) {
                     case "T":
@@ -58,12 +68,13 @@ public class Storage {
                         break;
                     case "D":
                         if (parts.length >= 4) {
-                            task = new Deadline(description, parts[3]);
+                            task = new Deadline(description, LocalDateTime.parse(parts[3], formatter));
                         }
                         break;
                     case "E":
                         if (parts.length >= 5) {
-                            task = new Event(description, parts[3], parts[4]);
+                            task = new Event(description, LocalDateTime.parse(parts[3], formatter),
+                                    LocalDateTime.parse(parts[4], formatter));
                         }
                         break;
                 }

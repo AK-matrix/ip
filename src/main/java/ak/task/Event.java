@@ -1,3 +1,5 @@
+package ak.task;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,6 +22,20 @@ public class Event extends Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         this.from = LocalDateTime.parse(from, formatter);
         this.to = LocalDateTime.parse(to, formatter);
+    }
+
+    /**
+     * Constructs a new Event object with LocalDateTime directly (for storage
+     * loading).
+     *
+     * @param description The description of the event.
+     * @param from        The start date time.
+     * @param to          The end date time.
+     */
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
+        super(description);
+        this.from = from;
+        this.to = to;
     }
 
     /**

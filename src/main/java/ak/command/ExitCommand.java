@@ -1,3 +1,9 @@
+package ak.command;
+
+import ak.task.TaskList;
+import ak.ui.Ui;
+import ak.storage.Storage;
+
 /**
  * Represents a command to exit the application.
  */

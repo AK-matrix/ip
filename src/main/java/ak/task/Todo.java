@@ -1,3 +1,5 @@
+package ak.task;
+
 /**
  * Represents a todo task (task without a specific time).
  */

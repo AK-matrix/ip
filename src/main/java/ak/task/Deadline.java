@@ -1,3 +1,5 @@
+package ak.task;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,6 +19,18 @@ public class Deadline extends Task {
         super(description);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         this.by = LocalDateTime.parse(by, formatter);
+    }
+
+    /**
+     * Constructs a new Deadline object with LocalDateTime directly (for storage
+     * loading).
+     *
+     * @param description The description of the deadline.
+     * @param by          The due date and time.
+     */
+    public Deadline(String description, LocalDateTime by) {
+        super(description);
+        this.by = by;
     }
 
     /**

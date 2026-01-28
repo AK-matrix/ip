@@ -1,3 +1,5 @@
+package ak.ui;
+
 import java.util.Scanner;
 
 /**
