@@ -4,6 +4,7 @@ import ak.command.Command;
 import ak.command.AddCommand;
 import ak.command.DeleteCommand;
 import ak.command.ExitCommand;
+import ak.command.FindCommand;
 import ak.command.ListCommand;
 import ak.command.MarkCommand;
 import ak.command.UnmarkCommand;
@@ -66,6 +67,12 @@ public class Parser {
                 }
             } else {
                 throw new AkException("Please specify the task number to delete.");
+            }
+        } else if (commandWord.equals("find")) {
+            if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+                return new FindCommand(parts[1].trim());
+            } else {
+                throw new AkException("The keyword to find cannot be empty.");
             }
         } else if (commandWord.equals("todo")) {
             if (parts.length > 1 && !parts[1].trim().isEmpty()) {
