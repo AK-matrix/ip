@@ -1,0 +1,114 @@
+/* Space Theme CSS */
+
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #050510 0%, #101525 100%);
+    /* Darker, deeper background */
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    /* Make all text slightly bolder */
+}
+
+#scrollPane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+#scrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+#dialogContainer {
+    -fx-background-color: transparent;
+}
+
+.dialog-box {
+    -fx-spacing: 20;
+    /* More spacing for cleaner look */
+    -fx-padding: 15 25 15 25;
+}
+
+.dialog-label {
+    -fx-text-fill: white;
+    -fx-padding: 15 20 15 20;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-font-size: 15px;
+    /* Larger text */
+    -fx-wrap-text: true;
+}
+
+.user-label {
+    /* Vibrant Purple/Pink Gradient for User */
+    -fx-background-color: linear-gradient(to bottom right, #6b2c91, #9d4edd);
+    -fx-alignment: center-right;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10, 0, 0, 5);
+    -fx-text-fill: white;
+}
+
+.duke-label {
+    /* Electric Blue/Cyan Gradient for Bot */
+    -fx-background-color: linear-gradient(to bottom right, #005f73, #0a9396);
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10, 0, 0, 5);
+    -fx-text-fill: white;
+}
+
+/* Send Button */
+#sendButton {
+    -fx-background-color: linear-gradient(to right, #f72585, #b5179e);
+    /* Bolder Neon Pink/Purple */
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    /* Extra bold */
+    -fx-font-size: 14px;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(247, 37, 133, 0.5), 12, 0, 0, 0);
+}
+
+#sendButton:hover {
+    -fx-background-color: linear-gradient(to right, #b5179e, #7209b7);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#sendButton:pressed {
+    -fx-background-color: #560bad;
+}
+
+/* User Input Field */
+#userInput {
+    -fx-background-color: #1a1e2e;
+    -fx-text-fill: #4cc9f0;
+    /* Bright Cyan Text */
+    -fx-prompt-text-fill: #4895ef;
+    -fx-background-radius: 30;
+    -fx-border-color: linear-gradient(to right, #4361ee, #4cc9f0);
+    -fx-border-width: 2px;
+    -fx-border-radius: 30;
+    -fx-padding: 0 20 0 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+#userInput:focused {
+    -fx-border-color: #f72585;
+    /* Pink border on focus */
+    -fx-effect: dropshadow(three-pass-box, rgba(247, 37, 133, 0.4), 12, 0, 0, 0);
+}
+
+/* Scroll Bar Styling */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #4361ee;
+    -fx-background-radius: 10;
+}
