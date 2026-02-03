@@ -9,11 +9,24 @@ public class Ui {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
     private Scanner scanner;
 
+    private StringBuilder outputBuffer = new StringBuilder();
+    private boolean isGuiMode = false;
+
     /**
      * Constructs a Ui object and initializes the scanner.
      */
     public Ui() {
         this.scanner = new Scanner(System.in);
+    }
+
+    public void setGuiMode(boolean guiMode) {
+        this.isGuiMode = guiMode;
+    }
+
+    public String getResponse() {
+        String response = outputBuffer.toString();
+        outputBuffer.setLength(0); // Clear buffer
+        return response;
     }
 
     /**
@@ -43,7 +56,9 @@ public class Ui {
      * Prints a horizontal line separator.
      */
     public void showLine() {
-        System.out.println("    " + HORIZONTAL_LINE);
+        if (!isGuiMode) {
+            System.out.println("    " + HORIZONTAL_LINE);
+        }
     }
 
     /**
@@ -61,13 +76,17 @@ public class Ui {
      * @param message The message to print.
      */
     public void printOutput(String message) {
-        showLine();
-        String[] lines = message.split("\n");
-        for (String line : lines) {
-            System.out.println("     " + line);
+        if (isGuiMode) {
+            outputBuffer.append(message).append("\n");
+        } else {
+            showLine();
+            String[] lines = message.split("\n");
+            for (String line : lines) {
+                System.out.println("     " + line);
+            }
+            showLine();
+            System.out.println();
         }
-        showLine();
-        System.out.println();
     }
 
     /**
@@ -76,11 +95,18 @@ public class Ui {
      * @param tasks The list of matching tasks.
      */
     public void showFoundTasks(java.util.ArrayList<ak.task.Task> tasks) {
-        showLine();
-        System.out.println("     Here are the matching tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("     " + (i + 1) + "." + tasks.get(i));
+        if (isGuiMode) {
+            outputBuffer.append("Here are the matching tasks in your list:\n");
+            for (int i = 0; i < tasks.size(); i++) {
+                outputBuffer.append(i + 1).append(".").append(tasks.get(i)).append("\n");
+            }
+        } else {
+            showLine();
+            System.out.println("     Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println("     " + (i + 1) + "." + tasks.get(i));
+            }
+            showLine();
         }
-        showLine();
     }
 }

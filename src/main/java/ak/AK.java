@@ -8,8 +8,8 @@ import ak.task.TaskList;
 import ak.ui.Ui;
 
 /**
- * AK is a chatbot that allows for basic interaction with the user.
- * It is structured using OOP principles with separate classes for UI, Storage,
+ * AK is a chatbot that allows for basic interaction with the user. It is
+ * structured using OOP principles with separate classes for UI, Storage,
  * TaskList, Parser, and Commands.
  */
 public class AK {
@@ -35,7 +35,26 @@ public class AK {
     }
 
     /**
-     * Creates and runs the chatbot instance.
+     * Generates a response for the user's chat message.
+     *
+     * @param input The user's input string.
+     * @return The response string from the chatbot.
+     */
+    public String getResponse(String input) {
+        try {
+            ui.setGuiMode(true);
+            Command c = Parser.parse(input);
+            c.execute(tasks, ui, storage);
+            return ui.getResponse();
+        } catch (AkException e) {
+            return "OOPS!!! " + e.getMessage();
+        } catch (Exception e) {
+            return "An unexpected error occurred: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Runs the chatbot in CLI mode.
      */
     public void run() {
         ui.showWelcome();
@@ -52,13 +71,7 @@ public class AK {
             } catch (Exception e) {
                 ui.showError("An unexpected error occurred: " + e.getMessage());
             } finally {
-                // Keep consistent with original behavior; showLine() was here in example but
-                // Parser/Commands usually print their own lines/output.
-                // However, AK.java main loop in original task description had this.
-                // In my implementation, Commands mostly handle printing wrapped in lines via
-                // Ui.
-                // So I'll remove the extra showLine here to avoid double lines, except for the
-                // input divider line.
+                // Keep consistent with original behavior
             }
         }
         ui.showExit();

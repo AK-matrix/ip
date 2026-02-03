@@ -1,6 +1,5 @@
 D | 1 | cook | 1029-10-19 1900
 D | 1 | haha | 2018-07-06 1900
 T | 0 | cook tomorrow
-T | 0 | cookinganjan
-T | 0 | huehdqocjooocookoh
 E | 0 | haha | 2017-09-08 1800 | 2016-09-06 1600
+T | 1 | play around
