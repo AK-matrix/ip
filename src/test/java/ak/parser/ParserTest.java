@@ -1,13 +1,14 @@
 package ak.parser;
 
-import ak.command.AddCommand;
-import ak.command.Command;
-import ak.exception.AkException;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+
+import ak.command.AddCommand;
+import ak.command.Command;
+import ak.exception.AkException;
 
 public class ParserTest {
 
