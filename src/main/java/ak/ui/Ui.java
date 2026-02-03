@@ -75,14 +75,18 @@ public class Ui {
      *
      * @param message The message to print.
      */
-    public void printOutput(String message) {
+    public void printOutput(String... messages) {
         if (isGuiMode) {
-            outputBuffer.append(message).append("\n");
+            for (String message : messages) {
+                outputBuffer.append(message).append("\n");
+            }
         } else {
             showLine();
-            String[] lines = message.split("\n");
-            for (String line : lines) {
-                System.out.println("     " + line);
+            for (String message : messages) {
+                String[] lines = message.split("\n");
+                for (String line : lines) {
+                    System.out.println("     " + line);
+                }
             }
             showLine();
             System.out.println();
