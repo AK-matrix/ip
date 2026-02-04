@@ -77,12 +77,14 @@ public class AK {
         ui.showExit();
     }
 
+    private static final String FILE_PATH = "./data/ak.txt";
+
     /**
      * Main entry point of the application.
      *
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        new AK("./data/ak.txt").run();
+        new AK(FILE_PATH).run();
     }
 }

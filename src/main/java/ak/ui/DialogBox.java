@@ -5,9 +5,12 @@ import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
 import javafx.geometry.Pos;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -49,7 +52,7 @@ public class DialogBox extends HBox {
         displayPicture.setViewport(new javafx.geometry.Rectangle2D(x, y, size, size));
 
         // Clip the image to a circle
-        Circle clip = new Circle(25, 25, 25);
+        Circle clip = new Circle(50, 50, 50);
         displayPicture.setClip(clip);
     }
 
