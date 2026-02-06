@@ -1,4 +1,5 @@
-# AK - The Game of Thrones Themed Chatbot
+# AK
+## The Game of Thrones Themed Chatbot
 
 AK is a powerful **Graphical User Interface (GUI)** desktop application for managing tasks, designed with a classy **Game of Thrones (Ice and Fire)** aesthetic. While it is optimized for fast input, it provides a stunning visual experience reminiscent of Westeros.
 
@@ -13,7 +14,7 @@ AK is a powerful **Graphical User Interface (GUI)** desktop application for mana
 ## ⚡ Quick Start
 
 1.  Ensure you have Java `17` or above installed in your Computer.
-2.  Download the latest `ak.jar` from the releases page (if available) or build from source.
+2.  Download the latest `ak.jar` from [here](https://github.com/AK-matrix/ip/releases/download/Level-10/ak.jar).
 3.  Double-click the file to start the application.
 4.  The GUI should appear in a few seconds, displaying the "Game of Thrones" theme.
 5.  Type the command in the command box and press Enter to execute it.
