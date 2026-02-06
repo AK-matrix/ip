@@ -104,6 +104,7 @@ public class Storage {
      * @param tasks The list of tasks to save.
      */
     public void save(ArrayList<Task> tasks) {
+        assert filePath != null && !filePath.isEmpty() : "File path cannot be null or empty";
         try (FileWriter writer = new FileWriter(filePath)) {
             for (Task task : tasks) {
                 writer.write(task.toFileString() + System.lineSeparator());

@@ -35,6 +35,7 @@ public class Ui {
      * @return The user's input command.
      */
     public String readCommand() {
+        assert scanner != null : "Scanner should be initialized";
         return scanner.nextLine();
     }
 
