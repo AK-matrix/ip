@@ -1,89 +1,107 @@
-# AK Chatbot
+# AK - The Game of Thrones Themed Chatbot
 
-AK is a desktop app for managing tasks, optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
+AK is a powerful **Graphical User Interface (GUI)** desktop application for managing tasks, designed with a classy **Game of Thrones (Ice and Fire)** aesthetic. While it is optimized for fast input, it provides a stunning visual experience reminiscent of Westeros.
 
-## Features
+## 📖 Table of Contents
+* [Quick Start](#quick-start)
+* [Features](#features)
+    * [Adding Tasks](#adding-tasks)
+    * [Managing Tasks](#managing-tasks)
+    * [Finding Tasks](#finding-tasks)
+* [Command Summary](#command-summary)
 
-### List all tasks: `list`
-Shows a list of all tasks in the chatbot.
+## ⚡ Quick Start
 
-Format: `list`
+1.  Ensure you have Java `17` or above installed in your Computer.
+2.  Download the latest `ak.jar` from the releases page (if available) or build from source.
+3.  Double-click the file to start the application.
+4.  The GUI should appear in a few seconds, displaying the "Game of Thrones" theme.
+5.  Type the command in the command box and press Enter to execute it.
+6.  Refer to the [Features](#features) section below for details of each command.
 
-### Add a Todo: `todo`
-Adds a new todo task to the list.
+## ⚔️ Features
 
-Format: `todo <description>`
+> ℹ️ **Notes about the command format:**
+> * Words in `<angle_brackets>` are the parameters to be supplied by the user e.g. in `todo <description>`, `<description>` is a parameter which can be used as `todo read book`.
+> * Items in `[square_brackets]` are optional.
+> * Parameters must be distinct and specific.
 
-Example:
-* `todo read book`
+### Adding Tasks
 
-### Add a Deadline: `deadline`
-Adds a task with a specific deadline.
+#### 1. Add a Todo: `todo`
+Adds a standard todo task to your list.
 
-Format: `deadline <description> /by <yyyy-MM-dd HHmm>`
+* **Format:** `todo <description>`
+* **Example:** `todo Watch House of the Dragon`
 
-Example:
-* `deadline submit assignment /by 2024-12-01 2359`
+#### 2. Add a Deadline: `deadline`
+Adds a task that needs to be done before a specific date/time.
 
-### Add an Event: `event`
-Adds a task that happens during a specific time period.
+* **Format:** `deadline <description> /by <yyyy-MM-dd HHmm>`
+* **Example:** `deadline Pay Iron Bank debts /by 2024-12-01 2359`
 
-Format: `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
+#### 3. Add an Event: `event`
+Adds a task that takes place during a specific time period.
 
-Example:
-* `event team meeting /from 2024-12-02 1400 /to 2024-12-02 1600`
+* **Format:** `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
+* **Example:** `event Small Council Meeting /from 2024-12-02 1400 /to 2024-12-02 1600`
 
-### Mark a task as done: `mark`
-Marks a specific task as done.
+### Managing Tasks
 
-Format: `mark <index>`
+#### 4. List all tasks: `list`
+Displays a scrollable list of all pending and completed tasks.
 
-* Marks the task at `index` as done.
-* The index refers to the index number shown in the displayed task list.
-* The index **must be a positive integer** 1, 2, 3, …
+* **Format:** `list`
 
-Example:
-* `mark 1` marks the first task in the list as done.
+#### 5. Mark task as done: `mark`
+Marks a task as completed. The task background may change to indicate completion.
 
-### Mark a task as not done: `unmark`
-Marks a specific task as not done (incomplete).
+* **Format:** `mark <index>`
+* **Example:** `mark 1`
 
-Format: `unmark <index>`
+#### 6. Mark task as not done: `unmark`
+Restores a completed task to the pending state.
 
-* Marks the task at `index` as not done.
-* The index refers to the index number shown in the displayed task list.
-* The index **must be a positive integer** 1, 2, 3, …
+* **Format:** `unmark <index>`
+* **Example:** `unmark 1`
 
-Example:
-* `unmark 1` marks the first task in the list as not done.
+#### 7. Delete a task: `delete`
+Permanently removes a task from the list.
 
-### Delete a task: `delete`
-Deletes the specified task from the list.
+* **Format:** `delete <index>`
+* **Example:** `delete 3`
 
-Format: `delete <index>`
+### Finding Tasks
 
-* Deletes the task at the specified `index`.
-* The index refers to the index number shown in the displayed task list.
-* The index **must be a positive integer** 1, 2, 3, …
+#### 8. Find tasks: `find`
+Locates tasks containing a specific keyword (case-sensitive).
 
-Example:
-* `delete 2` deletes the 2nd task in the list.
+* **Format:** `find <keyword>`
+* **Example:** `find Winter`
 
-### Find tasks: `find`
-Finds tasks whose names contain the given keyword.
+### Exiting
 
-Format: `find <keyword>`
+#### 9. Exit: `bye`
+Closes the application window.
 
-* The search is case-sensitive.
-* Displays a list of tasks that contain the keyword.
+* **Format:** `bye`
 
-Example:
-* `find book` returns paths containing "book".
+---
 
-### Exit the program: `bye`
-Exits the application.
+## 📜 Command Summary
 
-Format: `bye`
+| Action | Format, Examples |
+| :--- | :--- |
+| **Add Todo** | `todo <description>` <br> e.g., `todo Join the Night's Watch` |
+| **Add Deadline** | `deadline <description> /by <date>` <br> e.g., `deadline Defend the Wall /by 2024-12-31 2359` |
+| **Add Event** | `event <description> /from <date> /to <date>` <br> e.g., `event Tourney /from 2024-01-01 1000 /to 2024-01-01 1800` |
+| **List** | `list` |
+| **Mark** | `mark <index>` <br> e.g., `mark 1` |
+| **Unmark** | `unmark <index>` <br> e.g., `unmark 1` |
+| **Delete** | `delete <index>` <br> e.g., `delete 2` |
+| **Find** | `find <keyword>` <br> e.g., `find Dragon` |
+| **Bye** | `bye` |
 
-## Saving the data
-AK data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+---
+
+*Valar Dohaeris.*
