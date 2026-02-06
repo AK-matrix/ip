@@ -1,10 +1,2 @@
-T | 1 | play
-T | 0 | sing
-T | 1 | visit MBS
-T | 1 | code by hand
-T | 0 | play like there's nothing to do every again
-T | 0 | cook
-T | 0 | win the throne
-T | 0 | play
-T | 0 | ok
-T | 0 | have fun
+T | 0 | push Bran
+D | 0 | takeover highgarden | 1018-09-08 1700
