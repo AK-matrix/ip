@@ -10,9 +10,7 @@ import ak.command.FindCommand;
 import ak.command.ListCommand;
 import ak.command.MarkCommand;
 import ak.command.UnmarkCommand;
-
 import ak.exception.AkException;
-
 import ak.task.Deadline;
 import ak.task.Event;
 import ak.task.Todo;
@@ -32,8 +30,10 @@ public class Parser {
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
 
-    private static final String ERROR_INVALID_DATE_FORMAT = "Invalid date/time format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-01 1800).";
-    private static final String ERROR_EVENT_USAGE = "Usage: event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>";
+    private static final String ERROR_INVALID_DATE_FORMAT = "Invalid date/time format. "
+            + "Please use yyyy-MM-dd HHmm (e.g., 2019-12-01 1800).";
+    private static final String ERROR_EVENT_USAGE = "Usage: event <description> /from "
+            + "<yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>";
     private static final String ERROR_DEADLINE_USAGE = "Usage: deadline <description> /by <yyyy-MM-dd HHmm>";
 
     /**

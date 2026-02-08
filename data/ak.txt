@@ -1,2 +1,0 @@
-T | 0 | push Bran
-D | 0 | takeover highgarden | 1018-09-08 1700

@@ -14,6 +14,7 @@ import ak.ui.Ui;
  */
 public class AK {
 
+    private static final String FILE_PATH = "./data/ak.txt";
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -76,8 +77,6 @@ public class AK {
         }
         ui.showExit();
     }
-
-    private static final String FILE_PATH = "./data/ak.txt";
 
     /**
      * Main entry point of the application.

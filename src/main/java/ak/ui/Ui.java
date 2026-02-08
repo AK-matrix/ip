@@ -74,7 +74,7 @@ public class Ui {
     /**
      * Prints a generic message to the user wrapped in horizontal lines.
      *
-     * @param message The message to print.
+     * @param messages The message to print.
      */
     public void printOutput(String... messages) {
         if (isGuiMode) {
