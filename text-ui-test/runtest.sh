@@ -20,23 +20,22 @@ then
     rm -rf ./data
 fi
 
-# compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
+# build the code using Gradle
+if ! ../gradlew shadowJar -p ..
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-
 java -cp ../build/libs/ak.jar ak.AK < input.txt > ACTUAL.TXT 2> ERROR.TXT
 
 # convert to UNIX format
-cp EXPECTED.TXT EXPECTED-UNIX.TXT
-dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+cp EXPECTED.txt EXPECTED-UNIX.txt
+dos2unix ACTUAL.TXT EXPECTED-UNIX.txt
 
 # compare the output to the expected output
-diff ACTUAL.TXT EXPECTED-UNIX.TXT
+diff -w ACTUAL.TXT EXPECTED-UNIX.txt
 if [ $? -eq 0 ]
 then
     echo "Test result: PASSED"

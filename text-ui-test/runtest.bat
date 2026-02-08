@@ -17,4 +17,4 @@ REM run the program, feed commands from input.txt file and redirect the output t
 java -cp "%~dp0..\build\libs\ak.jar" ak.AK < input.txt > ACTUAL.TXT 2> ERROR.TXT
 
 REM compare the output to the expected output
-FC ACTUAL.TXT EXPECTED.TXT
+FC /W ACTUAL.TXT EXPECTED.txt
