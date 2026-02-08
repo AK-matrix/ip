@@ -2,6 +2,7 @@ package ak.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  * Represents an event task (task with a start and end date time).
@@ -14,8 +15,8 @@ public class Event extends Task {
      * Constructs a new Event object.
      *
      * @param description The description of the event.
-     * @param from        The start date time in yyyy-MM-dd HHmm format.
-     * @param to          The end date time in yyyy-MM-dd HHmm format.
+     * @param from The start date time in yyyy-MM-dd HHmm format.
+     * @param to The end date time in yyyy-MM-dd HHmm format.
      */
     public Event(String description, String from, String to) {
         super(description);
@@ -29,8 +30,8 @@ public class Event extends Task {
      * loading).
      *
      * @param description The description of the event.
-     * @param from        The start date time.
-     * @param to          The end date time.
+     * @param from The start date time.
+     * @param to The end date time.
      */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
@@ -46,14 +47,14 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a");
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a", Locale.US);
         return "[E]" + super.toString() + " (from: " + from.format(displayFormatter) + " to: "
                 + to.format(displayFormatter) + ")";
     }
 
     /**
-     * Returns a string representation of the event for file storage.
-     * Format: E | status | description | from | to (yyyy-MM-dd HHmm)
+     * Returns a string representation of the event for file storage. Format: E
+     * | status | description | from | to (yyyy-MM-dd HHmm)
      *
      * @return The formatted string for storage.
      */

@@ -2,6 +2,7 @@ package ak.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  * Represents a deadline task (task with a due date and time).
@@ -13,7 +14,7 @@ public class Deadline extends Task {
      * Constructs a new Deadline object.
      *
      * @param description The description of the deadline.
-     * @param by          The due date and time in yyyy-MM-dd HHmm format.
+     * @param by The due date and time in yyyy-MM-dd HHmm format.
      */
     public Deadline(String description, String by) {
         super(description);
@@ -26,7 +27,7 @@ public class Deadline extends Task {
      * loading).
      *
      * @param description The description of the deadline.
-     * @param by          The due date and time.
+     * @param by The due date and time.
      */
     public Deadline(String description, LocalDateTime by) {
         super(description);
@@ -34,19 +35,20 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns a string representation of the deadline, including its type, status,
-     * description, and due date time.
+     * Returns a string representation of the deadline, including its type,
+     * status, description, and due date time.
      *
      * @return The formatted string representation of the deadline.
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) + ")";
+        return "[D]" + super.toString() + " (by: "
+                + by.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a", Locale.US)) + ")";
     }
 
     /**
-     * Returns a string representation of the deadline for file storage.
-     * Format: D | status | description | by (yyyy-MM-dd HHmm)
+     * Returns a string representation of the deadline for file storage. Format:
+     * D | status | description | by (yyyy-MM-dd HHmm)
      *
      * @return The formatted string for storage.
      */

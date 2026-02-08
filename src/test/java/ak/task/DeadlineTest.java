@@ -12,7 +12,7 @@ public class DeadlineTest {
     public void toString_validDate_success() {
         LocalDateTime by = LocalDateTime.of(2022, 12, 12, 18, 0);
         Deadline deadline = new Deadline("return book", by);
-        assertEquals("[D][ ] return book (by: Dec 12 2022, 6:00 pm)", deadline.toString());
+        assertEquals("[D][ ] return book (by: Dec 12 2022, 6:00 PM)", deadline.toString());
     }
 
     @Test
