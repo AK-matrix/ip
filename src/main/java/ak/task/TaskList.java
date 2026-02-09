@@ -30,6 +30,7 @@ public class TaskList {
      * @param task The task to add.
      */
     public void add(Task task) {
+        assert task != null : "Task to add cannot be null";
         tasks.add(task);
     }
 
@@ -40,6 +41,7 @@ public class TaskList {
      * @return The removed task.
      */
     public Task delete(int index) {
+        assert index >= 0 && index < tasks.size() : "Task index is out of bounds";
         return tasks.remove(index);
     }
 
@@ -70,6 +72,7 @@ public class TaskList {
      * @return An ArrayList of matching tasks.
      */
     public ArrayList<Task> find(String keyword) {
+        assert keyword != null && !keyword.isEmpty() : "Search keyword cannot be empty";
         return tasks.stream().filter(task -> task.toString().contains(keyword))
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
     }

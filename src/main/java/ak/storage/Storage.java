@@ -25,6 +25,7 @@ public class Storage {
      * @param filePath The path to the file where data is stored.
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isEmpty() : "File path cannot be null or empty";
         this.filePath = filePath;
     }
 
@@ -103,6 +104,7 @@ public class Storage {
      */
     public void save(ArrayList<Task> tasks) {
         assert filePath != null && !filePath.isEmpty() : "File path cannot be null or empty";
+        assert tasks != null : "Task list to save cannot be null";
         try (FileWriter writer = new FileWriter(filePath)) {
             for (Task task : tasks) {
                 writer.write(task.toFileString() + System.lineSeparator());

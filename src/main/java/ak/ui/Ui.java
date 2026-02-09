@@ -68,6 +68,7 @@ public class Ui {
      * @param message The error message to display.
      */
     public void showError(String message) {
+        assert message != null : "Error message cannot be null";
         printOutput("OOPS!!! " + message);
     }
 
@@ -77,6 +78,7 @@ public class Ui {
      * @param messages The message to print.
      */
     public void printOutput(String... messages) {
+        assert messages != null : "Messages cannot be null";
         if (isGuiMode) {
             for (String message : messages) {
                 outputBuffer.append(message).append("\n");
@@ -100,17 +102,16 @@ public class Ui {
      * @param tasks The list of matching tasks.
      */
     public void showFoundTasks(java.util.ArrayList<ak.task.Task> tasks) {
+        assert tasks != null : "Task list cannot be null";
         if (isGuiMode) {
             outputBuffer.append("Here are the matching tasks in your list:\n");
-            for (int i = 0; i < tasks.size(); i++) {
-                outputBuffer.append(i + 1).append(".").append(tasks.get(i)).append("\n");
-            }
+            java.util.stream.IntStream.range(0, tasks.size())
+                    .forEach(i -> outputBuffer.append(i + 1).append(".").append(tasks.get(i)).append("\n"));
         } else {
             showLine();
             System.out.println("     Here are the matching tasks in your list:");
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println("     " + (i + 1) + "." + tasks.get(i));
-            }
+            java.util.stream.IntStream.range(0, tasks.size())
+                    .forEach(i -> System.out.println("     " + (i + 1) + "." + tasks.get(i)));
             showLine();
         }
     }

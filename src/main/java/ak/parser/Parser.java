@@ -44,6 +44,7 @@ public class Parser {
      * @throws AkException If the command is invalid or arguments are missing.
      */
     public static Command parse(String fullCommand) throws AkException {
+        assert fullCommand != null : "Command string cannot be null";
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0];
 
