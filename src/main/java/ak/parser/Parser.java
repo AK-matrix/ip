@@ -3,13 +3,18 @@ package ak.parser;
 import java.time.format.DateTimeParseException;
 
 import ak.command.AddCommand;
+import ak.command.AddContactCommand;
 import ak.command.Command;
 import ak.command.DeleteCommand;
+import ak.command.DeleteContactCommand;
+import ak.command.EditContactCommand;
 import ak.command.ExitCommand;
 import ak.command.FindCommand;
 import ak.command.ListCommand;
+import ak.command.ListContactCommand;
 import ak.command.MarkCommand;
 import ak.command.UnmarkCommand;
+import ak.contact.Contact;
 import ak.exception.AkException;
 import ak.task.Deadline;
 import ak.task.Event;
@@ -48,7 +53,15 @@ public class Parser {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0];
 
-        if (commandWord.equals(COMMAND_BYE)) {
+        if (commandWord.equals("add") && parts.length > 1 && parts[1].startsWith("contact")) {
+            return parseAddContact(parts[1].substring(7).trim());
+        } else if (commandWord.equals("contact") && parts.length > 1 && parts[1].trim().equals("list")) {
+            return new ListContactCommand();
+        } else if (commandWord.equals("delete") && parts.length > 1 && parts[1].startsWith("contact")) {
+            return parseDeleteContact(parts[1].substring(7).trim());
+        } else if (commandWord.equals("edit") && parts.length > 1 && parts[1].startsWith("contact")) {
+            return parseEditContact(parts[1].substring(7).trim());
+        } else if (commandWord.equals(COMMAND_BYE)) {
             return new ExitCommand();
         } else if (commandWord.equals(COMMAND_LIST)) {
             return new ListCommand();
@@ -136,5 +149,116 @@ public class Parser {
         } else {
             throw new AkException("I'm sorry, but I don't know what that means :-(");
         }
+    }
+
+    private static Command parseAddContact(String args) throws AkException {
+        if (args.isEmpty()) {
+            throw new AkException("Usage: add contact n/<name> e/<email> p/<number> i/<info>");
+        }
+        String name = extractArgument(args, "n/");
+        String email = extractArgument(args, "e/");
+        String phone = extractArgument(args, "p/");
+        String info = extractArgument(args, "i/");
+
+        if (name == null || name.isEmpty()) {
+            throw new AkException("Contact name (n/) is required.");
+        }
+        if (email == null) {
+            email = "";
+        }
+        if (phone == null) {
+            phone = "";
+        }
+        if (info == null) {
+            info = "";
+        }
+
+        return new AddContactCommand(new Contact(name, email, phone, info));
+    }
+
+    /**
+     * Parses arguments for deleting a contact.
+     *
+     * @param args The argument string.
+     * @return The DeleteContactCommand.
+     * @throws AkException If arguments are invalid.
+     */
+    private static Command parseDeleteContact(String args) throws AkException {
+        try {
+            int index = Integer.parseInt(args.trim()) - 1;
+            return new DeleteContactCommand(index);
+        } catch (NumberFormatException e) {
+            throw new AkException("Please enter a valid contact number.");
+        }
+    }
+
+    /**
+     * Parses arguments for editing a contact.
+     *
+     * @param args The argument string.
+     * @return The EditContactCommand.
+     * @throws AkException If arguments are invalid.
+     */
+    private static Command parseEditContact(String args) throws AkException {
+        // Format: edit contact <index> n/name ...
+        String[] parts = args.trim().split(" ", 2);
+        if (parts.length < 2) {
+            throw new AkException("Usage: edit contact <index> [n/<name>] [e/<email>] [p/<phone>] [i/<info>]");
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]) - 1;
+        } catch (NumberFormatException e) {
+            throw new AkException("Please enter a valid contact number.");
+        }
+
+        String details = parts[1];
+        String name = extractArgument(details, "n/");
+        String email = extractArgument(details, "e/");
+        String phone = extractArgument(details, "p/");
+        String info = extractArgument(details, "i/");
+
+        if (name == null && email == null && phone == null && info == null) {
+            throw new AkException("At least one field to edit must be provided.");
+        }
+
+        return new EditContactCommand(index, name, email, phone, info);
+    }
+
+    /**
+     * Extracts an argument value given a prefix.
+     *
+     * @param text The full text.
+     * @param prefix The argument prefix (e.g., "n/").
+     * @return The extracted argument value, or null if not found.
+     */
+    private static String extractArgument(String text, String prefix) {
+        int startIndex = text.indexOf(prefix);
+        if (startIndex == -1) {
+            return null;
+        }
+
+        // Start reading after the prefix
+        int contentStart = startIndex + prefix.length();
+
+        // Find the start of the next argument or end of string
+        // We look for other prefixes " n/", " e/", " p/", " i/" to allow spaces
+        // in content
+        int nextPrefixIndex = text.length();
+        String[] prefixes = { " n/", " e/", " p/", " i/" };
+
+        for (String p : prefixes) {
+            int idx = text.indexOf(p, contentStart);
+            // Ensure we don't pick up the same prefix if it checks itself or
+            // earlier ones
+            // But since we start searching from contentStart, we are safe
+            // looking forward
+            if (idx != -1 && idx < nextPrefixIndex) {
+                nextPrefixIndex = idx;
+            }
+        }
+
+        return text.substring(contentStart, nextPrefixIndex).trim();
     }
 }

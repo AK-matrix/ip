@@ -9,20 +9,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  * An example of a custom control using FXML. This control represents a dialog
- * box consisting of an ImageView to represent the speaker's face and a label
- * containing text from the speaker.
+ * box consisting of an ImageView to represent the speaker's face and a
+ * formatted text area containing text from the speaker.
  */
 public class DialogBox extends HBox {
     @FXML
-    private Label dialog;
+    private TextFlow dialog;
     @FXML
     private ImageView displayPicture;
 
@@ -36,7 +37,7 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
 
-        dialog.setText(text);
+        buildTextFlow(text);
         displayPicture.setImage(img);
 
         // Crop image to a square (focusing on top/center) to avoid stretching
@@ -51,6 +52,27 @@ public class DialogBox extends HBox {
         // Clip the image to a circle
         Circle clip = new Circle(50, 50, 50);
         displayPicture.setClip(clip);
+    }
+
+    private void buildTextFlow(String text) {
+        String[] parts = text.split("\\*\\*");
+        for (int i = 0; i < parts.length; i++) {
+            Text textNode = new Text(parts[i]);
+            textNode.getStyleClass().add("dialog-text");
+            // If index is odd, it's inside **...**, so make it bold.
+            // Wait, split works like this:
+            // "Hello **Name**!" -> ["Hello ", "Name", "!"]
+            // 0: normal, 1: bold, 2: normal.
+            // If string starts with **, e.g. "**Name** hello", -> ["", "Name",
+            // " hello"]
+            // 0: empty (normal), 1: bold, 2: normal.
+            // This logic holds for standard markdown usage where ** is a
+            // toggle.
+            if (i % 2 == 1) {
+                textNode.setStyle("-fx-font-weight: bold;");
+            }
+            dialog.getChildren().add(textNode);
+        }
     }
 
     /**

@@ -10,7 +10,6 @@
 
 .label {
     -fx-text-fill: #ecf0f1;
-    -fx-font-weight: bold;
     -fx-effect: dropshadow(one-pass-box, black, 2, 0, 0, 1);
     /* Text shadow for readability on bg */
 }
@@ -53,6 +52,12 @@
     -fx-border-width: 1px;
 }
 
+.user-label .dialog-text {
+    -fx-fill: #2c3e50;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 15px;
+}
+
 .duke-label {
     /* Royal Crimson/Targaryen Look for Bot */
     -fx-background-color: linear-gradient(to bottom, #922b21, #c0392b);
@@ -62,6 +67,12 @@
     -fx-alignment: center-left;
     -fx-border-color: #641e16;
     -fx-border-width: 1px;
+}
+
+.duke-label .dialog-text {
+    -fx-fill: #fdfefe;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 15px;
 }
 
 /* Avatar Styling */

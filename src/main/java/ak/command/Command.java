@@ -13,12 +13,14 @@ public abstract class Command {
     /**
      * Executes the command.
      *
-     * @param tasks   The TaskList to operate on.
-     * @param ui      The Ui to interact with the user.
+     * @param tasks The TaskList to operate on.
+     * @param contacts The ContactList to operate on.
+     * @param ui The Ui to interact with the user.
      * @param storage The Storage to save/load tasks.
      * @throws AkException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws AkException;
+    public abstract void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage)
+            throws AkException;
 
     /**
      * Returns whether this command exits the application.

@@ -22,7 +22,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws AkException {
+    public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) throws AkException {
         assert tasks != null && ui != null && storage != null : "Execution context cannot be null";
         if (index >= 0 && index < tasks.size()) {
             Task removedTask = tasks.delete(index);
