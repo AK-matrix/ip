@@ -115,4 +115,54 @@ public class Ui {
             showLine();
         }
     }
+
+    /**
+     * Prints the list of contacts.
+     *
+     * @param contacts The list of contacts.
+     */
+    public void showContacts(java.util.ArrayList<ak.contact.Contact> contacts) {
+        assert contacts != null : "Contact list cannot be null";
+        StringBuilder listOutput = new StringBuilder("Here are the contacts in your list:\n");
+        for (int i = 0; i < contacts.size(); i++) {
+            listOutput.append(i + 1).append(". ").append("**").append(contacts.get(i).getName()).append("**")
+                    .append(" | Email: ").append(contacts.get(i).getEmail()).append(" | Phone: ")
+                    .append(contacts.get(i).getPhone()).append(" | Info: ").append(contacts.get(i).getInfo());
+            if (i < contacts.size() - 1) {
+                listOutput.append("\n");
+            }
+        }
+        printOutput(listOutput.toString());
+    }
+
+    /**
+     * Prints the contact added confirmation.
+     *
+     * @param contact The contact that was added.
+     * @param size The current size of the contact list.
+     */
+    public void showContactAdded(ak.contact.Contact contact, int size) {
+        printOutput("Got it. I've added this contact:\n  " + contact + "\n Now you have " + size
+                + " contacts in the list.");
+    }
+
+    /**
+     * Prints the contact deleted confirmation.
+     *
+     * @param contact The contact that was deleted.
+     * @param size The current size of the contact list.
+     */
+    public void showContactDeleted(ak.contact.Contact contact, int size) {
+        printOutput("Noted. I've removed this contact:\n  " + contact + "\n Now you have " + size
+                + " contacts in the list.");
+    }
+
+    /**
+     * Prints the contact edited confirmation.
+     *
+     * @param contact The contact that was edited.
+     */
+    public void showContactEdited(ak.contact.Contact contact) {
+        printOutput("Noted. I've edited this contact:\n  " + contact);
+    }
 }

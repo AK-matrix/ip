@@ -23,7 +23,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) {
         ArrayList<Task> foundTasks = tasks.find(this.keyword);
         ui.showFoundTasks(foundTasks);
     }

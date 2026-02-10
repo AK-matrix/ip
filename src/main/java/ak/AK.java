@@ -17,6 +17,7 @@ public class AK {
     private static final String FILE_PATH = "./data/ak.txt";
     private Storage storage;
     private TaskList tasks;
+    private ak.contact.ContactList contacts;
     private Ui ui;
 
     /**
@@ -33,6 +34,13 @@ public class AK {
             ui.showError("Error loading tasks. Starting with an empty list.");
             tasks = new TaskList();
         }
+
+        try {
+            contacts = new ak.contact.ContactList(storage.loadContacts());
+        } catch (Exception e) {
+            ui.showError("Error loading contacts. Starting with an empty contact list.");
+            contacts = new ak.contact.ContactList();
+        }
     }
 
     /**
@@ -45,7 +53,7 @@ public class AK {
         try {
             ui.setGuiMode(true);
             Command c = Parser.parse(input);
-            c.execute(tasks, ui, storage);
+            c.execute(tasks, contacts, ui, storage);
             return ui.getResponse();
         } catch (AkException e) {
             return "OOPS!!! " + e.getMessage();
@@ -65,7 +73,7 @@ public class AK {
                 String fullCommand = ui.readCommand();
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
+                c.execute(tasks, contacts, ui, storage);
                 isExit = c.isExit();
             } catch (AkException e) {
                 ui.showError(e.getMessage());

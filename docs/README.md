@@ -8,6 +8,7 @@ AK is a powerful **Graphical User Interface (GUI)** desktop application for mana
 * [Features](#features)
     * [Adding Tasks](#adding-tasks)
     * [Managing Tasks](#managing-tasks)
+    * [Managing Contacts](#managing-contacts)
     * [Finding Tasks](#finding-tasks)
 * [Command Summary](#command-summary)
 
@@ -72,6 +73,31 @@ Permanently removes a task from the list.
 * **Format:** `delete <index>`
 * **Example:** `delete 3`
 
+### Managing Contacts
+
+#### 8. Add a Contact: `add contact`
+Adds a new contact to your address book.
+
+* **Format:** `add contact n/<name> [p/<phone>] [e/<email>] [i/<info>]`
+* **Example:** `add contact n/Jon Snow p/12345678 e/jon@winterfell.com i/Knows nothing`
+
+#### 9. List Contacts: `contact list`
+Displays all stored contacts.
+
+* **Format:** `contact list`
+
+#### 10. Edit a Contact: `edit contact`
+Edits an existing contact at the specified index. Only the specified fields will be updated.
+
+* **Format:** `edit contact <index> [n/<name>] [p/<phone>] [e/<email>] [i/<info>]`
+* **Example:** `edit contact 1 p/87654321`
+
+#### 11. Delete a Contact: `delete contact`
+Removes a contact from the list.
+
+* **Format:** `delete contact <index>`
+* **Example:** `delete contact 2`
+
 ### Finding Tasks
 
 #### 8. Find tasks: `find`
@@ -101,6 +127,10 @@ Closes the application window.
 | **Unmark** | `unmark <index>` <br> e.g., `unmark 1` |
 | **Delete** | `delete <index>` <br> e.g., `delete 2` |
 | **Find** | `find <keyword>` <br> e.g., `find Dragon` |
+| **Add Contact** | `add contact n/<name> ...` <br> e.g., `add contact n/Tyrion` |
+| **List Contacts** | `contact list` |
+| **Delete Contact** | `delete contact <index>` <br> e.g., `delete contact 1` |
+| **Edit Contact** | `edit contact <index> ...` <br> e.g., `edit contact 1 n/Jaime` |
 | **Bye** | `bye` |
 
 ---

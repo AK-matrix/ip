@@ -21,7 +21,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) {
         tasks.add(task);
         storage.save(tasks.getAllTasks());
         ui.printOutput(

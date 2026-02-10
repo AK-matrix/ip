@@ -113,4 +113,61 @@ public class Storage {
             System.out.println("Error saving file: " + e.getMessage());
         }
     }
+
+    /**
+     * Loads contacts from the file.
+     *
+     * @return An ArrayList of Contact objects loaded from the file.
+     */
+    public ArrayList<ak.contact.Contact> loadContacts() {
+        ArrayList<ak.contact.Contact> contacts = new ArrayList<>();
+        File file = new File("./data/contacts.txt");
+
+        // create directory if it doesn't exist
+        if (file.getParentFile() != null && !file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        if (!file.exists()) {
+            return contacts;
+        }
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(" \\| ");
+
+                if (parts.length < 5 || !parts[0].equals("C")) {
+                    continue; // Skip corrupted parts or non-contact lines
+                }
+
+                String name = parts[1];
+                String email = parts[2];
+                String phone = parts[3];
+                String info = parts[4];
+
+                contacts.add(new ak.contact.Contact(name, email, phone, info));
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading contacts file: " + e.getMessage());
+        }
+
+        return contacts;
+    }
+
+    /**
+     * Saves the list of contacts to the file.
+     *
+     * @param contacts The list of contacts to save.
+     */
+    public void saveContacts(ArrayList<ak.contact.Contact> contacts) {
+        File file = new File("./data/contacts.txt");
+        try (FileWriter writer = new FileWriter(file)) {
+            for (ak.contact.Contact contact : contacts) {
+                writer.write(contact.toFileString() + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving contacts file: " + e.getMessage());
+        }
+    }
 }
