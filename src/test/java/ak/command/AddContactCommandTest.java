@@ -35,7 +35,7 @@ public class AddContactCommandTest {
         command.execute(tasks, contacts, ui, storage);
 
         String response = ui.getResponse();
-        assertTrue(response.contains("OOPS!!! This contact already exists"),
+        assertTrue(response.contains("This contact already exists in your list"),
                 "Response should contain error message: " + response);
         assertEquals(1, contacts.size(), "Contact list size should remain 1");
 

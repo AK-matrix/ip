@@ -1,38 +1,43 @@
-> Task :compileJava UP-TO-DATE
+> Task :compileJava
 > Task :processResources UP-TO-DATE
-> Task :classes UP-TO-DATE
+> Task :classes
 > Task :compileTestJava UP-TO-DATE
 > Task :processTestResources NO-SOURCE
 > Task :testClasses UP-TO-DATE
 
-> Task :test FAILED
+> Task :test
 
-DeleteCommandTest > execute_validIndex_success() PASSED
-
-DeleteCommandTest > execute_invalidIndex_throwsException() FAILED
-    org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IndexOutOfBoundsException> but was: <ak.exception.AkException>
+AddCommandTest > execute_duplicateTask_showsError() FAILED
+    org.opentest4j.AssertionFailedError: Response should contain error message: The Night is Dark and Full of Errors.
+    This task already plagues your list.
+     ==> expected: <true> but was: <false>
         at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-        at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
-        at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
-        at app//org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3111)
-        at app//ak.command.DeleteCommandTest.execute_invalidIndex_throwsException(DeleteCommandTest.java:51)
+        at app//org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+        at app//org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+        at app//org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+        at app//org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:210)
+        at app//ak.command.AddCommandTest.execute_duplicateTask_showsError(AddCommandTest.java:36)
 
-        Caused by:
-        ak.exception.AkException: Task number is out of range.
-            at app//ak.command.DeleteCommand.execute(DeleteCommand.java:33)
-            at app//ak.command.DeleteCommandTest.lambda$execute_invalidIndex_throwsException$0(DeleteCommandTest.java:51)
-            at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
-            ... 3 more
-
-AddCommandTest > execute_duplicateTask_showsError() PASSED
-
-AddContactCommandTest > execute_duplicateContact_showsError() PASSED
+AddContactCommandTest > execute_duplicateContact_showsError() FAILED
+    org.opentest4j.AssertionFailedError: Response should contain error message: The Night is Dark and Full of Errors.
+    This contact already exists in your list.
+     ==> expected: <true> but was: <false>
+        at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+        at app//org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+        at app//org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+        at app//org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+        at app//org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:210)
+        at app//ak.command.AddContactCommandTest.execute_duplicateContact_showsError(AddContactCommandTest.java:38)
 
 ContactCommandTest > execute_editContact_success() PASSED
 
 ContactCommandTest > execute_deleteContact_success() PASSED
 
 ContactCommandTest > execute_listContact_success() PASSED
+
+DeleteCommandTest > execute_validIndex_success() PASSED
+
+DeleteCommandTest > execute_invalidIndex_throwsException() PASSED
 
 FindCommandTest > execute_keywordFound_showsResults() PASSED
 
@@ -96,7 +101,9 @@ TodoTest > toFileString_valid_success() PASSED
 
 TodoTest > toString_valid_success() PASSED
 
-38 tests completed, 1 failed
+38 tests completed, 2 failed
+
+> Task :test FAILED
 
 FAILURE: Build failed with an exception.
 
@@ -117,5 +124,5 @@ You can use '--warning-mode all' to show the individual deprecation warnings and
 
 See https://docs.gradle.org/7.6.2/userguide/command_line_interface.html#sec:command_line_warnings
 
-BUILD FAILED in 2s
-4 actionable tasks: 1 executed, 3 up-to-date
+BUILD FAILED in 5s
+4 actionable tasks: 2 executed, 2 up-to-date

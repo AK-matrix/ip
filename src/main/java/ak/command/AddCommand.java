@@ -23,13 +23,13 @@ public class AddCommand extends Command {
     @Override
     public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) {
         if (tasks.getAllTasks().contains(task)) {
-            ui.showError("This task already exists in your list.");
+            ui.showError("This task already plagues your list.");
             return;
         }
         tasks.add(task);
         storage.save(tasks.getAllTasks());
-        ui.printOutput(
-                "Got it. I've added this task:\n  " + task + "\n Now you have " + tasks.size() + " tasks in the list.");
+        ui.printOutput("A new burden for the realm.\nI've added this task:\n  " + task + "\n Now you have "
+                + tasks.size() + " tasks in the list.");
     }
 
     @Override
