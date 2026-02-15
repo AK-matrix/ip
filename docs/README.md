@@ -1,138 +1,128 @@
-# AK
-## The Game of Thrones Themed Chatbot
+# AK - The Chatbot of Ice and Fire
+> *"I drink and I know things."* - AK
 
-AK is a powerful **Graphical User Interface (GUI)** desktop application for managing tasks, designed with a classy **Game of Thrones (Ice and Fire)** aesthetic. While it is optimized for fast input, it provides a stunning visual experience reminiscent of Westeros.
+AK is a powerful task management chatbot wrapped in a **Game of Thrones** aesthetic. It serves as your personal Hand of the Code, managing your tasks and contacts with the wit of Tyrion Lannister and the precision of a Maester.
+
+![GUI Mockup](../images/got_background.png)
 
 ## 📖 Table of Contents
-* [Quick Start](#quick-start)
-* [Features](#features)
-    * [Adding Tasks](#adding-tasks)
-    * [Managing Tasks](#managing-tasks)
-    * [Managing Contacts](#managing-contacts)
-    * [Finding Tasks](#finding-tasks)
-* [Command Summary](#command-summary)
+*   [Quick Start](#quick-start)
+*   [Features](#features)
+    *   [Adding Tasks](#adding-tasks)
+    *   [Managing Tasks](#managing-tasks)
+    *   [The Address Book (Contacts)](#the-address-book)
+    *   [Finding Things](#finding-things)
+*   [Command Summary](#command-summary)
+*   [Strict Rules of the Citadel](#strict-rules-of-the-citadel)
 
 ## ⚡ Quick Start
 
-1.  Ensure you have Java `17` or above installed in your Computer.
-2.  Download the latest `ak.jar` from [here](https://github.com/AK-matrix/ip/releases/download/Level-10/ak.jar).
-3.  Double-click the file to start the application.
-4.  The GUI should appear in a few seconds, displaying the "Game of Thrones" theme.
-5.  Type the command in the command box and press Enter to execute it.
-6.  Refer to the [Features](#features) section below for details of each command.
+1.  Ensure you have Java `17` or above installed.
+2.  Download the latest `ak.jar`.
+3.  Double-click the file to summon AK.
+4.  Type commands in the box and press Enter. AK will respond in kind.
 
 ## ⚔️ Features
 
-> ℹ️ **Notes about the command format:**
-> * Words in `<angle_brackets>` are the parameters to be supplied by the user e.g. in `todo <description>`, `<description>` is a parameter which can be used as `todo read book`.
-> * Items in `[square_brackets]` are optional.
-> * Parameters must be distinct and specific.
+> **Note:** Parameters in `<angle_brackets>` are mandatory. Parameters in `[square_brackets]` are optional.
 
 ### Adding Tasks
+*"A new burden for the realm."*
 
-#### 1. Add a Todo: `todo`
-Adds a standard todo task to your list.
+#### 1. Todo (`todo`)
+Adds a simple task to your list.
+*   **Format:** `todo <description>`
+*   **Example:** `todo Pay the Iron Price`
 
-* **Format:** `todo <description>`
-* **Example:** `todo Watch House of the Dragon`
+#### 2. Deadline (`deadline`)
+Adds a task that must be done by a specific time.
+*   **Format:** `deadline <description> /by <yyyy-MM-dd HHmm>`
+*   **Example:** `deadline Pay debts to Iron Bank /by 2024-12-31 2359`
 
-#### 2. Add a Deadline: `deadline`
-Adds a task that needs to be done before a specific date/time.
-
-* **Format:** `deadline <description> /by <yyyy-MM-dd HHmm>`
-* **Example:** `deadline Pay Iron Bank debts /by 2024-12-01 2359`
-
-#### 3. Add an Event: `event`
-Adds a task that takes place during a specific time period.
-
-* **Format:** `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
-* **Example:** `event Small Council Meeting /from 2024-12-02 1400 /to 2024-12-02 1600`
+#### 3. Event (`event`)
+Adds a task that occurs within a time frame.
+*   **Format:** `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
+*   **Example:** `event Tourney of the Hand /from 2024-06-01 1200 /to 2024-06-01 1800`
 
 ### Managing Tasks
 
-#### 4. List all tasks: `list`
-Displays a scrollable list of all pending and completed tasks.
+#### 4. List (`list`)
+Displays all pending and completed burdens.
+*   **Format:** `list`
 
-* **Format:** `list`
+#### 5. Mark as Done (`mark`)
+Marks a task as completed. *"A debt paid."*
+*   **Format:** `mark <index>`
+*   **Example:** `mark 1`
 
-#### 5. Mark task as done: `mark`
-Marks a task as completed. The task background may change to indicate completion.
+#### 6. Mark as Not Done (`unmark`)
+Marks a task as incomplete.
+*   **Format:** `unmark <index>`
+*   **Example:** `unmark 1`
 
-* **Format:** `mark <index>`
-* **Example:** `mark 1`
+#### 7. Delete (`delete`)
+Permanently removes a task. *"Sent to the Wall."*
+*   **Format:** `delete <index>`
+*   **Example:** `delete 3`
 
-#### 6. Mark task as not done: `unmark`
-Restores a completed task to the pending state.
+### The Address Book
+*"A girl has no name... but your contacts must."*
 
-* **Format:** `unmark <index>`
-* **Example:** `unmark 1`
+#### 8. Add Contact (`add contact`)
+Adds a person to your contact list.
+*   **Format:** `add contact n/<name> [p/<phone>] [e/<email>] [i/<info>]`
+*   **Example:** `add contact n/Jon Snow p/12345678 e/jon@wall.com i/Knows nothing`
 
-#### 7. Delete a task: `delete`
-Permanently removes a task from the list.
+#### 9. List Contacts (`contact list`)
+Displays your allies and enemies.
+*   **Format:** `contact list`
 
-* **Format:** `delete <index>`
-* **Example:** `delete 3`
+#### 10. Edit Contact (`edit contact`)
+Updates an existing contact.
+*   **Format:** `edit contact <index> [n/<new_name>] [p/<new_phone>] ...`
+*   **Example:** `edit contact 1 n/Aegon Targaryen`
 
-### Managing Contacts
+#### 11. Delete Contact (`delete contact`)
+Removes a contact.
+*   **Format:** `delete contact <index>`
+*   **Example:** `delete contact 2`
 
-#### 8. Add a Contact: `add contact`
-Adds a new contact to your address book.
+### Finding Things
 
-* **Format:** `add contact n/<name> [p/<phone>] [e/<email>] [i/<info>]`
-* **Example:** `add contact n/Jon Snow p/12345678 e/jon@winterfell.com i/Knows nothing`
+#### 12. Find (`find`)
+Searches for tasks containing a keyword.
+*   **Format:** `find <keyword>`
+*   **Example:** `find Dragon`
 
-#### 9. List Contacts: `contact list`
-Displays all stored contacts.
-
-* **Format:** `contact list`
-
-#### 10. Edit a Contact: `edit contact`
-Edits an existing contact at the specified index. Only the specified fields will be updated.
-
-* **Format:** `edit contact <index> [n/<name>] [p/<phone>] [e/<email>] [i/<info>]`
-* **Example:** `edit contact 1 p/87654321`
-
-#### 11. Delete a Contact: `delete contact`
-Removes a contact from the list.
-
-* **Format:** `delete contact <index>`
-* **Example:** `delete contact 2`
-
-### Finding Tasks
-
-#### 8. Find tasks: `find`
-Locates tasks containing a specific keyword (case-sensitive).
-
-* **Format:** `find <keyword>`
-* **Example:** `find Winter`
-
-### Exiting
-
-#### 9. Exit: `bye`
-Closes the application window.
-
-* **Format:** `bye`
+#### 13. Exit (`bye`)
+Ends your watch.
+*   **Format:** `bye`
 
 ---
 
 ## 📜 Command Summary
 
-| Action | Format, Examples |
+| Action | Format |
 | :--- | :--- |
-| **Add Todo** | `todo <description>` <br> e.g., `todo Join the Night's Watch` |
-| **Add Deadline** | `deadline <description> /by <date>` <br> e.g., `deadline Defend the Wall /by 2024-12-31 2359` |
-| **Add Event** | `event <description> /from <date> /to <date>` <br> e.g., `event Tourney /from 2024-01-01 1000 /to 2024-01-01 1800` |
+| **Add Todo** | `todo <desc>` |
+| **Add Deadline** | `deadline <desc> /by <date>` |
+| **Add Event** | `event <desc> /from <date> /to <date>` |
 | **List** | `list` |
-| **Mark** | `mark <index>` <br> e.g., `mark 1` |
-| **Unmark** | `unmark <index>` <br> e.g., `unmark 1` |
-| **Delete** | `delete <index>` <br> e.g., `delete 2` |
-| **Find** | `find <keyword>` <br> e.g., `find Dragon` |
-| **Add Contact** | `add contact n/<name> ...` <br> e.g., `add contact n/Tyrion` |
-| **List Contacts** | `contact list` |
-| **Delete Contact** | `delete contact <index>` <br> e.g., `delete contact 1` |
-| **Edit Contact** | `edit contact <index> ...` <br> e.g., `edit contact 1 n/Jaime` |
-| **Bye** | `bye` |
+| **Mark/Unmark** | `mark <index>` / `unmark <index>` |
+| **Delete** | `delete <index>` |
+| **Find** | `find <keyword>` |
+| **Add Contact** | `add contact n/<name> ...` |
+| **Edit Contact** | `edit contact <index> ...` |
+| **Del Contact** | `delete contact <index>` |
+| **List Contacts**| `contact list` |
+| **Exit** | `bye` |
 
----
+## 🏰 Strict Rules of the Citadel
+
+AK enforces strict rules to keep the realm orderly:
+
+1.  **Strict Dates**: Dates must be real. *February 30th* does not exist, even in Westeros. Use `yyyy-MM-dd HHmm`.
+2.  **Logical Events**: An event cannot end before it starts. Time flows forward.
+3.  **No Duplicates**: You cannot add the exact same task or contact twice. *"This task already plagues your list."*
 
 *Valar Dohaeris.*
