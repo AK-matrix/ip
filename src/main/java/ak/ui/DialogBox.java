@@ -89,6 +89,7 @@ public class DialogBox extends HBox {
     public static DialogBox getUserDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.dialog.getStyleClass().add("user-label");
+        db.displayPicture.getStyleClass().add("user-img");
         return db;
     }
 
@@ -96,6 +97,7 @@ public class DialogBox extends HBox {
         var db = new DialogBox(text, img);
         db.flip();
         db.dialog.getStyleClass().add("duke-label");
+        db.displayPicture.getStyleClass().add("duke-img");
         return db;
     }
 
@@ -103,6 +105,7 @@ public class DialogBox extends HBox {
         var db = new DialogBox(text, img);
         db.flip();
         db.dialog.getStyleClass().add("error-label");
+        db.displayPicture.getStyleClass().add("error-img");
         return db;
     }
 }

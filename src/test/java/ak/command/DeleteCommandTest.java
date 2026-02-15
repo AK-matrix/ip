@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import ak.contact.ContactList;
 import ak.exception.AkException;
 import ak.storage.Storage;
-
 import ak.task.TaskList;
 import ak.task.Todo;
 import ak.ui.Ui;
@@ -24,10 +23,8 @@ public class DeleteCommandTest {
         ContactList contacts = new ContactList();
         Ui ui = new Ui();
         ui.setGuiMode(true);
-        Storage storage = new Storage("temp_delete_test.txt"); // Placeholder
-                                                               // path
-
-        DeleteCommand command = new DeleteCommand(0);
+        Storage storage = new Storage("temp_delete_test.txt");
+        DeleteCommand command = new DeleteCommand(0); // Create test command
         command.execute(tasks, contacts, ui, storage);
 
         assertEquals(1, tasks.size());

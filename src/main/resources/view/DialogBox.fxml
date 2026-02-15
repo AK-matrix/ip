@@ -8,7 +8,7 @@
 
 <fx:root alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" styleClass="dialog-box" fillHeight="false">
     <children>
-        <TextFlow fx:id="dialog" styleClass="dialog-label" maxWidth="270.0" />
+        <TextFlow fx:id="dialog" styleClass="dialog-label" maxWidth="600.0" />
         <ImageView fx:id="displayPicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="user-icon"/>
     </children>
     <padding>

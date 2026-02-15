@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +19,8 @@ public class AddContactCommandTest {
     public void execute_duplicateContact_showsError() {
         // Setup
         Contact contact1 = new Contact("Arnav", "a@a.com", "123", "info");
-        Contact contact2 = new Contact("arnav", "b@b.com", "456", "other info"); // Same
-                                                                                 // name
-                                                                                 // (case-insensitive)
+        // Same name (case-insensitive)
+        Contact contact2 = new Contact("arnav", "b@b.com", "456", "other info");
         ContactList contacts = new ContactList();
         contacts.add(contact1);
 
@@ -31,17 +29,20 @@ public class AddContactCommandTest {
         ui.setGuiMode(true); // Capture output in buffer
         Storage storage = new Storage("temp_contact_test_storage.txt");
 
-        AddContactCommand command = new AddContactCommand(contact2);
-        command.execute(tasks, contacts, ui, storage);
+        // Duplicate Contact
+        AddContactCommand dCommand = new AddContactCommand(contact2);
+        dCommand.execute(tasks, contacts, ui, storage);
 
+        // Assert: Size remains 1
+        assertEquals(1, contacts.size(), "Contact list size should remain 1");
+
+        // Verify Output
         String response = ui.getResponse();
         assertTrue(response.contains("This contact already exists in your list"),
                 "Response should contain error message: " + response);
-        assertEquals(1, contacts.size(), "Contact list size should remain 1");
 
         // Cleanup
         new File("temp_contact_test_storage.txt").delete();
-        new File("data/contacts.txt").delete(); // Storage might create default
-                                                // file?
+        new File("data/contacts.txt").delete();
     }
 }

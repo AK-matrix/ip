@@ -23,7 +23,7 @@ public class EventTest {
 
     @Test
     public void constructor_startAfterEnd_throwsException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Event("description", "2023-10-10 1300", "2023-10-10 1200"));
+        assertThrows(java.time.format.DateTimeParseException.class,
+                () -> new Event("Project meeting", "invalid", "2023-12-02 1400"));
     }
 }

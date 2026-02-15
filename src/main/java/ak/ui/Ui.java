@@ -106,7 +106,7 @@ public class Ui {
         if (isGuiMode) {
             outputBuffer.append("Here are the matching tasks in your list:\n");
             java.util.stream.IntStream.range(0, tasks.size())
-                    .forEach(i -> outputBuffer.append(i + 1).append(".").append(tasks.get(i)).append("\n"));
+                    .forEach(i -> outputBuffer.append(i + 1).append(".").append(tasks.get(i)).append("\n\n"));
         } else {
             showLine();
             System.out.println("     Here are the matching tasks in your list:");
@@ -129,7 +129,7 @@ public class Ui {
                     .append(" | Email: ").append(contacts.get(i).getEmail()).append(" | Phone: ")
                     .append(contacts.get(i).getPhone()).append(" | Info: ").append(contacts.get(i).getInfo());
             if (i < contacts.size() - 1) {
-                listOutput.append("\n");
+                listOutput.append("\n\n");
             }
         }
         printOutput(listOutput.toString());

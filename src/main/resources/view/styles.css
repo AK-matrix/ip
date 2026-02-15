@@ -1,7 +1,7 @@
 /* Game of Thrones Theme (Ice and Fire) - Royal Refinement */
 
 .root {
-    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
     -fx-background-image: url("../images/got_background.png");
     -fx-background-size: cover;
     -fx-background-position: center center;
@@ -25,22 +25,26 @@
 
 #dialogContainer {
     -fx-background-color: transparent;
+    -fx-padding: 30 20 30 20;
+    /* Margins for the chat area */
+    -fx-spacing: 30;
+    /* Space between messages */
 }
 
 .dialog-box {
     -fx-spacing: 20;
-    -fx-padding: 25 35 25 35;
-    /* Tweaked padding for polish */
+    -fx-padding: 0 10 0 10;
+    /* Balanced padding */
 }
 
 .dialog-label {
-    -fx-padding: 15 25 15 25;
+    -fx-padding: 15 20 15 20;
     -fx-background-radius: 20;
     /* Rounder corners */
     -fx-border-radius: 20;
-    -fx-font-size: 15px;
+    -fx-font-size: 16px;
     -fx-wrap-text: true;
-    -fx-font-family: "Georgia", serif;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 5);
 }
 
@@ -52,12 +56,13 @@
     -fx-alignment: center-right;
     -fx-border-color: #95a5a6;
     -fx-border-width: 1px;
+    -fx-max-width: 450px;
 }
 
 .user-label .dialog-text {
     -fx-fill: #2c3e50;
-    -fx-font-family: "Georgia", serif;
-    -fx-font-size: 15px;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
+    -fx-font-size: 16px;
 }
 
 .duke-label {
@@ -73,8 +78,8 @@
 
 .duke-label .dialog-text {
     -fx-fill: #fdfefe;
-    -fx-font-family: "Georgia", serif;
-    -fx-font-size: 15px;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
+    -fx-font-size: 16px;
 }
 
 .error-label {
@@ -89,15 +94,30 @@
 
 .error-label .dialog-text {
     -fx-fill: #f1948a;
-    -fx-font-family: "Georgia", serif;
-    -fx-font-size: 15px;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
 /* Avatar Styling */
 .user-icon {
-    /* Simulated Gold Border using Drop Shadow */
+    /* Legacy - kept for safety */
     -fx-effect: dropshadow(three-pass-box, #f1c40f, 6, 0.8, 0, 0);
+}
+
+.user-img {
+    /* Golden Coating for User */
+    -fx-effect: dropshadow(gaussian, #f1c40f, 15, 0.6, 0, 0);
+}
+
+.duke-img {
+    /* Crimson Coating for Tyrion */
+    -fx-effect: dropshadow(gaussian, #c0392b, 15, 0.6, 0, 0);
+}
+
+.error-img {
+    /* Burning Red Coating for Errors */
+    -fx-effect: dropshadow(gaussian, #e74c3c, 20, 0.8, 0, 0);
 }
 
 /* Send Button */
@@ -111,7 +131,7 @@
     -fx-border-radius: 5;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0, 0, 2);
-    -fx-font-family: "Georgia", serif;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
     -fx-border-color: #7d6608;
     -fx-border-width: 1px;
 }
@@ -136,7 +156,7 @@
     -fx-border-radius: 5;
     -fx-padding: 0 15 0 15;
     -fx-font-size: 14px;
-    -fx-font-family: "Georgia", serif;
+    -fx-font-family: "Palatino Linotype", "Book Antiqua", "Garamond", serif;
 }
 
 #userInput:focused {

@@ -16,7 +16,7 @@ public class ListCommand extends Command {
         for (int i = 0; i < tasks.size(); i++) {
             listOutput.append(i + 1).append(".").append(tasks.get(i));
             if (i < tasks.size() - 1) {
-                listOutput.append("\n");
+                listOutput.append("\n\n");
             }
         }
         ui.printOutput(listOutput.toString());

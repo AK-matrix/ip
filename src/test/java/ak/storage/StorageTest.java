@@ -12,20 +12,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ak.contact.Contact;
 import ak.task.Task;
 import ak.task.Todo;
 
 public class StorageTest {
 
     private static final String TEST_FILE_PATH = "test_data.txt";
-    private static final String TEST_CONTACT_FILE_PATH = "data/contacts.txt"; // Storage
-                                                                              // uses
-                                                                              // hardcoded
-                                                                              // path
-                                                                              // for
-                                                                              // contacts
-                                                                              // currently
+    private static final String TEST_CONTACT_FILE_PATH = "data/contacts.txt";
+
     private Storage storage;
 
     @BeforeEach

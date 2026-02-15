@@ -50,7 +50,7 @@ public class Storage {
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(" \\| ");
+                String[] parts = line.split(" \\| ", -1);
 
                 if (parts.length < 3) {
                     continue; // Skip corrupted parts
@@ -135,7 +135,7 @@ public class Storage {
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(" \\| ");
+                String[] parts = line.split(" \\| ", -1);
 
                 if (parts.length < 5 || !parts[0].equals("C")) {
                     continue; // Skip corrupted parts or non-contact lines
