@@ -110,4 +110,21 @@ public class Contact {
     public String toString() {
         return String.format("Name: %s | Email: %s | Phone: %s | Info: %s", name, email, phone, info);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Contact contact = (Contact) obj;
+        return name.equalsIgnoreCase(contact.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(name.toLowerCase());
+    }
 }

@@ -18,7 +18,8 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm")
+                .withResolverStyle(java.time.format.ResolverStyle.STRICT);
         this.by = LocalDateTime.parse(by, formatter);
     }
 
@@ -56,5 +57,22 @@ public class Deadline extends Task {
     public String toFileString() {
         return "D | " + (isDone ? "1" : "0") + " | " + description + " | "
                 + by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        Deadline deadline = (Deadline) obj;
+        return by.equals(deadline.by);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(super.hashCode(), by);
     }
 }

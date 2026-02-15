@@ -22,6 +22,10 @@ public class AddCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) {
+        if (tasks.getAllTasks().contains(task)) {
+            ui.showError("This task already exists in your list.");
+            return;
+        }
         tasks.add(task);
         storage.save(tasks.getAllTasks());
         ui.printOutput(

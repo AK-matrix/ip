@@ -1,0 +1,123 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+
+> Task :test
+
+ParserTest > parse_unknownCommand_exception() PASSED
+
+ParserTest > parse_todoCommand_success() PASSED
+
+ParserTest > parse_emptyCommand_exception() PASSED
+
+ParserTest > parse_deadlineCommand_success() FAILED
+    ak.exception.AkException: Invalid date/time format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-01 1800).
+        at app//ak.parser.Parser.prepareDeadlineCommand(Parser.java:175)
+        at app//ak.parser.Parser.prepareTaskCommand(Parser.java:161)
+        at app//ak.parser.Parser.parse(Parser.java:76)
+        at app//ak.parser.ParserTest.parse_deadlineCommand_success(ParserTest.java:23)
+
+EventTest > constructor_startAfterEnd_throwsException() FAILED
+    org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IllegalArgumentException> but was: <java.time.format.DateTimeParseException>
+        at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+        at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+        at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+        at app//org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3111)
+        at app//ak.task.EventTest.constructor_startAfterEnd_throwsException(EventTest.java:26)
+
+        Caused by:
+        java.time.format.DateTimeParseException: Text '2023-10-10 1300' could not be parsed: Unable to obtain LocalDateTime from TemporalAccessor: {YearOfEra=2023, DayOfMonth=10, MonthOfYear=10},ISO resolved to 13:00 of type java.time.format.Parsed
+            at java.base/java.time.format.DateTimeFormatter.createError(DateTimeFormatter.java:2023)
+            at java.base/java.time.format.DateTimeFormatter.parse(DateTimeFormatter.java:1958)
+            at java.base/java.time.LocalDateTime.parse(LocalDateTime.java:494)
+            at ak.task.Event.<init>(Event.java:25)
+            at ak.task.EventTest.lambda$constructor_startAfterEnd_throwsException$1(EventTest.java:27)
+            at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+            ... 3 more
+
+            Caused by:
+            java.time.DateTimeException: Unable to obtain LocalDateTime from TemporalAccessor: {YearOfEra=2023, DayOfMonth=10, MonthOfYear=10},ISO resolved to 13:00 of type java.time.format.Parsed
+                at java.base/java.time.LocalDateTime.from(LocalDateTime.java:463)
+                at java.base/java.time.format.Parsed.query(Parsed.java:241)
+                at java.base/java.time.format.DateTimeFormatter.parse(DateTimeFormatter.java:1954)
+                ... 7 more
+
+                Caused by:
+                java.time.DateTimeException: Unable to obtain LocalDate from TemporalAccessor: {YearOfEra=2023, DayOfMonth=10, MonthOfYear=10},ISO resolved to 13:00 of type java.time.format.Parsed
+                    at java.base/java.time.LocalDate.from(LocalDate.java:398)
+                    at java.base/java.time.LocalDateTime.from(LocalDateTime.java:458)
+                    ... 9 more
+
+EventTest > constructor_validDates_success() FAILED
+    java.time.format.DateTimeParseException: Text '2023-10-10 1000' could not be parsed: Unable to obtain LocalDateTime from TemporalAccessor: {YearOfEra=2023, DayOfMonth=10, MonthOfYear=10},ISO resolved to 10:00 of type java.time.format.Parsed
+        at java.base/java.time.format.DateTimeFormatter.createError(DateTimeFormatter.java:2023)
+        at java.base/java.time.format.DateTimeFormatter.parse(DateTimeFormatter.java:1958)
+        at java.base/java.time.LocalDateTime.parse(LocalDateTime.java:494)
+        at ak.task.Event.<init>(Event.java:25)
+        at ak.task.EventTest.constructor_validDates_success(EventTest.java:14)
+
+        Caused by:
+        java.time.DateTimeException: Unable to obtain LocalDateTime from TemporalAccessor: {YearOfEra=2023, DayOfMonth=10, MonthOfYear=10},ISO resolved to 10:00 of type java.time.format.Parsed
+            at java.base/java.time.LocalDateTime.from(LocalDateTime.java:463)
+            at java.base/java.time.format.Parsed.query(Parsed.java:241)
+            at java.base/java.time.format.DateTimeFormatter.parse(DateTimeFormatter.java:1954)
+            ... 3 more
+
+            Caused by:
+            java.time.DateTimeException: Unable to obtain LocalDate from TemporalAccessor: {YearOfEra=2023, DayOfMonth=10, MonthOfYear=10},ISO resolved to 10:00 of type java.time.format.Parsed
+                at java.base/java.time.LocalDate.from(LocalDate.java:398)
+                at java.base/java.time.LocalDateTime.from(LocalDateTime.java:458)
+                ... 5 more
+
+EventTest > constructor_invalidDates_throwsException() PASSED
+
+AddCommandTest > execute_duplicateTask_showsError() PASSED
+
+ContactListTest > delete_deleteContact_success() PASSED
+
+ContactListTest > add_addContact_success() PASSED
+
+ContactTest > testToFileString() PASSED
+
+ContactTest > testStringConversion() PASSED
+
+DeadlineTest > toString_validDate_success() PASSED
+
+DeadlineTest > toFileString_validDate_success() PASSED
+
+TaskListTest > find_nonMatchingKeyword_returnsEmpty() PASSED
+
+TaskListTest > find_keyword_returnsMatchingTasks() PASSED
+
+TodoTest > toFileString_valid_success() PASSED
+
+TodoTest > toString_valid_success() PASSED
+
+18 tests completed, 3 failed
+
+> Task :test FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///C:/Users/User/CS2103T-IP/ip/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.6.2/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 4s
+4 actionable tasks: 1 executed, 3 up-to-date
