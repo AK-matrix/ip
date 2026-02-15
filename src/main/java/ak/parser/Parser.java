@@ -53,102 +53,150 @@ public class Parser {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0];
 
+        if (isContactCommand(commandWord, parts)) {
+            return prepareContactCommand(commandWord, parts);
+        }
+
+        switch (commandWord) {
+        case COMMAND_BYE:
+            return new ExitCommand();
+        case COMMAND_LIST:
+            return new ListCommand();
+        case COMMAND_MARK:
+            return prepareMarkCommand(parts);
+        case COMMAND_UNMARK:
+            return prepareUnmarkCommand(parts);
+        case COMMAND_DELETE:
+            return prepareDeleteCommand(parts);
+        case COMMAND_FIND:
+            return prepareFindCommand(parts);
+        case COMMAND_TODO:
+        case COMMAND_DEADLINE:
+        case COMMAND_EVENT:
+            return prepareTaskCommand(commandWord, parts);
+        default:
+            throw new AkException("I'm sorry, but I don't know what that means :-(");
+        }
+    }
+
+    private static boolean isContactCommand(String commandWord, String[] parts) {
         if (commandWord.equals("add") && parts.length > 1 && parts[1].startsWith("contact")) {
+            return true;
+        }
+        if (commandWord.equals("contact")) {
+            return true;
+        }
+        if (commandWord.equals("delete") && parts.length > 1 && parts[1].startsWith("contact")) {
+            return true;
+        }
+        if (commandWord.equals("edit") && parts.length > 1 && parts[1].startsWith("contact")) {
+            return true;
+        }
+        return false;
+    }
+
+    private static Command prepareContactCommand(String commandWord, String[] parts) throws AkException {
+        if (commandWord.equals("add")) {
             return parseAddContact(parts[1].substring(7).trim());
         } else if (commandWord.equals("contact") && parts.length > 1 && parts[1].trim().equals("list")) {
             return new ListContactCommand();
-        } else if (commandWord.equals("delete") && parts.length > 1 && parts[1].startsWith("contact")) {
+        } else if (commandWord.equals("delete")) {
             return parseDeleteContact(parts[1].substring(7).trim());
-        } else if (commandWord.equals("edit") && parts.length > 1 && parts[1].startsWith("contact")) {
+        } else if (commandWord.equals("edit")) {
             return parseEditContact(parts[1].substring(7).trim());
-        } else if (commandWord.equals(COMMAND_BYE)) {
-            return new ExitCommand();
-        } else if (commandWord.equals(COMMAND_LIST)) {
-            return new ListCommand();
-        } else if (commandWord.equals(COMMAND_MARK)) {
-            if (parts.length > 1) {
-                try {
-                    int index = Integer.parseInt(parts[1]) - 1;
-                    return new MarkCommand(index);
-                } catch (NumberFormatException e) {
-                    throw new AkException("Please enter a valid task number.");
-                }
-            } else {
-                throw new AkException("Please specify the task number to mark.");
+        }
+        throw new AkException("Invalid contact command.");
+    }
+
+    private static Command prepareMarkCommand(String[] parts) throws AkException {
+        if (parts.length > 1) {
+            try {
+                int index = Integer.parseInt(parts[1]) - 1;
+                return new MarkCommand(index);
+            } catch (NumberFormatException e) {
+                throw new AkException("Please enter a valid task number.");
             }
-        } else if (commandWord.equals(COMMAND_UNMARK)) {
-            if (parts.length > 1) {
-                try {
-                    int index = Integer.parseInt(parts[1]) - 1;
-                    return new UnmarkCommand(index);
-                } catch (NumberFormatException e) {
-                    throw new AkException("Please enter a valid task number.");
-                }
-            } else {
-                throw new AkException("Please specify the task number to unmark.");
+        }
+        throw new AkException("Please specify the task number to mark.");
+    }
+
+    private static Command prepareUnmarkCommand(String[] parts) throws AkException {
+        if (parts.length > 1) {
+            try {
+                int index = Integer.parseInt(parts[1]) - 1;
+                return new UnmarkCommand(index);
+            } catch (NumberFormatException e) {
+                throw new AkException("Please enter a valid task number.");
             }
-        } else if (commandWord.equals(COMMAND_DELETE)) {
-            if (parts.length > 1) {
-                try {
-                    int index = Integer.parseInt(parts[1]) - 1;
-                    return new DeleteCommand(index);
-                } catch (NumberFormatException e) {
-                    throw new AkException("Please enter a valid task number.");
-                }
-            } else {
-                throw new AkException("Please specify the task number to delete.");
+        }
+        throw new AkException("Please specify the task number to unmark.");
+    }
+
+    private static Command prepareDeleteCommand(String[] parts) throws AkException {
+        if (parts.length > 1) {
+            try {
+                int index = Integer.parseInt(parts[1]) - 1;
+                return new DeleteCommand(index);
+            } catch (NumberFormatException e) {
+                throw new AkException("Please enter a valid task number.");
             }
-        } else if (commandWord.equals(COMMAND_FIND)) {
-            if (parts.length > 1 && !parts[1].trim().isEmpty()) {
-                return new FindCommand(parts[1].trim());
-            } else {
-                throw new AkException("The keyword to find cannot be empty.");
-            }
-        } else if (commandWord.equals(COMMAND_TODO)) {
+        }
+        throw new AkException("Please specify the task number to delete.");
+    }
+
+    private static Command prepareFindCommand(String[] parts) throws AkException {
+        if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+            return new FindCommand(parts[1].trim());
+        }
+        throw new AkException("The keyword to find cannot be empty.");
+    }
+
+    private static Command prepareTaskCommand(String commandWord, String[] parts) throws AkException {
+        if (commandWord.equals(COMMAND_TODO)) {
             if (parts.length > 1 && !parts[1].trim().isEmpty()) {
                 return new AddCommand(new Todo(parts[1]));
-            } else {
-                throw new AkException("The description of a todo cannot be empty.");
             }
+            throw new AkException("The description of a todo cannot be empty.");
         } else if (commandWord.equals(COMMAND_DEADLINE)) {
-            if (parts.length > 1) {
-                String[] deadlineParts = parts[1].split(" /by ", 2);
-                if (deadlineParts.length == 2 && !deadlineParts[0].trim().isEmpty()
-                        && !deadlineParts[1].trim().isEmpty()) {
+            return prepareDeadlineCommand(parts);
+        } else if (commandWord.equals(COMMAND_EVENT)) {
+            return prepareEventCommand(parts);
+        }
+        throw new AkException("Unknown task command.");
+    }
+
+    private static Command prepareDeadlineCommand(String[] parts) throws AkException {
+        if (parts.length > 1) {
+            String[] deadlineParts = parts[1].split(" /by ", 2);
+            if (deadlineParts.length == 2 && !deadlineParts[0].trim().isEmpty() && !deadlineParts[1].trim().isEmpty()) {
+                try {
+                    return new AddCommand(new Deadline(deadlineParts[0], deadlineParts[1]));
+                } catch (DateTimeParseException e) {
+                    throw new AkException(ERROR_INVALID_DATE_FORMAT);
+                }
+            }
+            throw new AkException(ERROR_DEADLINE_USAGE);
+        }
+        throw new AkException("The description of a deadline cannot be empty.");
+    }
+
+    private static Command prepareEventCommand(String[] parts) throws AkException {
+        if (parts.length > 1) {
+            String[] eventParts = parts[1].split(" /from ", 2);
+            if (eventParts.length == 2 && !eventParts[0].trim().isEmpty()) {
+                String[] timeParts = eventParts[1].split(" /to ", 2);
+                if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
                     try {
-                        return new AddCommand(new Deadline(deadlineParts[0], deadlineParts[1]));
+                        return new AddCommand(new Event(eventParts[0], timeParts[0], timeParts[1]));
                     } catch (DateTimeParseException e) {
                         throw new AkException(ERROR_INVALID_DATE_FORMAT);
                     }
-                } else {
-                    throw new AkException(ERROR_DEADLINE_USAGE);
                 }
-            } else {
-                throw new AkException("The description of a deadline cannot be empty.");
+                throw new AkException(ERROR_EVENT_USAGE);
             }
-        } else if (commandWord.equals(COMMAND_EVENT)) {
-            if (parts.length > 1) {
-                String[] eventParts = parts[1].split(" /from ", 2);
-                if (eventParts.length == 2 && !eventParts[0].trim().isEmpty()) {
-                    String[] timeParts = eventParts[1].split(" /to ", 2);
-                    if (timeParts.length == 2 && !timeParts[0].trim().isEmpty() && !timeParts[1].trim().isEmpty()) {
-                        try {
-                            return new AddCommand(new Event(eventParts[0], timeParts[0], timeParts[1]));
-                        } catch (DateTimeParseException e) {
-                            throw new AkException(ERROR_INVALID_DATE_FORMAT);
-                        }
-                    } else {
-                        throw new AkException(ERROR_EVENT_USAGE);
-                    }
-                } else {
-                    throw new AkException(ERROR_EVENT_USAGE);
-                }
-            } else {
-                throw new AkException("The description of an event cannot be empty.");
-            }
-        } else {
-            throw new AkException("I'm sorry, but I don't know what that means :-(");
+            throw new AkException(ERROR_EVENT_USAGE);
         }
+        throw new AkException("The description of an event cannot be empty.");
     }
 
     private static Command parseAddContact(String args) throws AkException {

@@ -98,4 +98,11 @@ public class DialogBox extends HBox {
         db.dialog.getStyleClass().add("duke-label");
         return db;
     }
+
+    public static DialogBox getDukeErrorDialog(String text, Image img) {
+        var db = new DialogBox(text, img);
+        db.flip();
+        db.dialog.getStyleClass().add("error-label");
+        return db;
+    }
 }
