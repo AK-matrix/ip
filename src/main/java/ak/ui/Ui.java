@@ -43,7 +43,7 @@ public class Ui {
      * Prints the welcome message to the user.
      */
     public void showWelcome() {
-        printOutput("I drink and I know things..\nWhat do you need?");
+        printOutput("Hello. I'm AK.\nI drink and I know things..\nWhat do you need?");
     }
 
     /**
