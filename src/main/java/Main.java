@@ -22,7 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            stage.setTitle("AK Chatbot");
+            stage.setTitle("Tyrion - Hand of the Code");
 
             // Inject the AK instance
             fxmlLoader.<MainWindow>getController().setAk(ak);

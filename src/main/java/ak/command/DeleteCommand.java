@@ -27,8 +27,8 @@ public class DeleteCommand extends Command {
         if (index >= 0 && index < tasks.size()) {
             Task removedTask = tasks.delete(index);
             storage.save(tasks.getAllTasks());
-            ui.printOutput("Noted. I've removed this task:\n  " + removedTask + "\n Now you have " + tasks.size()
-                    + " tasks in the list.");
+            ui.printOutput("Sent to the Wall.\nI've removed this task:\n  " + removedTask + "\n Now you have "
+                    + tasks.size() + " tasks in the list.");
         } else {
             throw new AkException("Task number is out of range.");
         }

@@ -33,8 +33,7 @@ public class AddCommandTest {
         command.execute(tasks, contacts, ui, storage);
 
         String response = ui.getResponse();
-        assertTrue(response.contains("OOPS!!! This task already exists"),
-                "Response should contain error message: " + response);
+        assertTrue(response.contains("This task already plagues your list"), "Response should contain error message: " + response);
         assertEquals(1, tasks.size(), "Task list size should remain 1");
 
         // Cleanup

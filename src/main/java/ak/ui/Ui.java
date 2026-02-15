@@ -43,14 +43,14 @@ public class Ui {
      * Prints the welcome message to the user.
      */
     public void showWelcome() {
-        printOutput("Hello! I'm AK\nWhat can I do for you?");
+        printOutput("I drink and I know things..\nWhat do you need?");
     }
 
     /**
      * Prints the exit message.
      */
     public void showExit() {
-        printOutput("Bye. Hope to see you again soon!");
+        printOutput("And now my watch is ended.");
     }
 
     /**
@@ -69,7 +69,7 @@ public class Ui {
      */
     public void showError(String message) {
         assert message != null : "Error message cannot be null";
-        printOutput("OOPS!!! " + message);
+        printOutput("The Night is Dark and Full of Errors.\n" + message);
     }
 
     /**
@@ -142,7 +142,7 @@ public class Ui {
      * @param size The current size of the contact list.
      */
     public void showContactAdded(ak.contact.Contact contact, int size) {
-        printOutput("Got it. I've added this contact:\n  " + contact + "\n Now you have " + size
+        printOutput("A new burden for the realm.\nI've added this contact:\n  " + contact + "\n Now you have " + size
                 + " contacts in the list.");
     }
 
@@ -153,7 +153,7 @@ public class Ui {
      * @param size The current size of the contact list.
      */
     public void showContactDeleted(ak.contact.Contact contact, int size) {
-        printOutput("Noted. I've removed this contact:\n  " + contact + "\n Now you have " + size
+        printOutput("Sent to the Wall.\nI've removed this contact:\n  " + contact + "\n Now you have " + size
                 + " contacts in the list.");
     }
 
@@ -163,6 +163,6 @@ public class Ui {
      * @param contact The contact that was edited.
      */
     public void showContactEdited(ak.contact.Contact contact) {
-        printOutput("Noted. I've edited this contact:\n  " + contact);
+        printOutput("A debt paid.\nI've edited this contact:\n  " + contact);
     }
 }
