@@ -23,6 +23,10 @@ public class AddContactCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, ContactList contacts, Ui ui, Storage storage) {
+        if (contacts.getAllContacts().contains(contact)) {
+            ui.showError("This contact already exists in your list.");
+            return;
+        }
         contacts.add(contact);
         storage.saveContacts(contacts.getAllContacts());
         ui.showContactAdded(contact, contacts.size());

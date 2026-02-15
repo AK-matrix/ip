@@ -20,9 +20,14 @@ public class Event extends Task {
      */
     public Event(String description, String from, String to) {
         super(description);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm")
+                .withResolverStyle(java.time.format.ResolverStyle.STRICT);
         this.from = LocalDateTime.parse(from, formatter);
         this.to = LocalDateTime.parse(to, formatter);
+
+        if (this.from.isAfter(this.to)) {
+            throw new IllegalArgumentException("Start date cannot be after end date.");
+        }
     }
 
     /**
@@ -63,5 +68,22 @@ public class Event extends Task {
         DateTimeFormatter storageFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from.format(storageFormatter) + " | "
                 + to.format(storageFormatter);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        Event event = (Event) obj;
+        return from.equals(event.from) && to.equals(event.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(super.hashCode(), from, to);
     }
 }

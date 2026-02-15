@@ -57,4 +57,21 @@ public abstract class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Task task = (Task) obj;
+        return description.equals(task.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(description);
+    }
 }
