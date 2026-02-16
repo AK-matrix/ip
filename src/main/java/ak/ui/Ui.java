@@ -19,10 +19,20 @@ public class Ui {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Sets the GUI mode state.
+     *
+     * @param guiMode True to enable GUI mode, false for CLI.
+     */
     public void setGuiMode(boolean guiMode) {
         this.isGuiMode = guiMode;
     }
 
+    /**
+     * Returns the accumulated output buffer for the GUI.
+     *
+     * @return The response string to be displayed in the GUI.
+     */
     public String getResponse() {
         String response = outputBuffer.toString();
         outputBuffer.setLength(0); // Clear buffer
@@ -139,7 +149,7 @@ public class Ui {
      * Prints the contact added confirmation.
      *
      * @param contact The contact that was added.
-     * @param size The current size of the contact list.
+     * @param size    The current size of the contact list.
      */
     public void showContactAdded(ak.contact.Contact contact, int size) {
         printOutput("A new burden for the realm.\nI've added this contact:\n  " + contact + "\n Now you have " + size
@@ -150,7 +160,7 @@ public class Ui {
      * Prints the contact deleted confirmation.
      *
      * @param contact The contact that was deleted.
-     * @param size The current size of the contact list.
+     * @param size    The current size of the contact list.
      */
     public void showContactDeleted(ak.contact.Contact contact, int size) {
         printOutput("Sent to the Wall.\nI've removed this contact:\n  " + contact + "\n Now you have " + size

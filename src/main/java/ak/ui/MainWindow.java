@@ -39,6 +39,11 @@ public class MainWindow extends AnchorPane {
                 .add(DialogBox.getDukeDialog("Hello! I'm AK. What can I do for you today?", dukeImage));
     }
 
+    /**
+     * Sets the AK instance for this controller.
+     *
+     * @param a The AK instance.
+     */
     public void setAk(AK a) {
         ak = a;
     }
