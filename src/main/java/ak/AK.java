@@ -11,6 +11,8 @@ import ak.ui.Ui;
  * AK is a chatbot that allows for basic interaction with the user. It is
  * structured using OOP principles with separate classes for UI, Storage,
  * TaskList, Parser, and Commands.
+ * <p>
+ * The application features a "Royal" Game of Thrones theme.
  */
 public class AK {
 
