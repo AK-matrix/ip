@@ -90,20 +90,28 @@ public class Ui {
     public void printOutput(String... messages) {
         assert messages != null : "Messages cannot be null";
         if (isGuiMode) {
-            for (String message : messages) {
-                outputBuffer.append(message).append("\n");
-            }
+            printGuiOutput(messages);
         } else {
-            showLine();
-            for (String message : messages) {
-                String[] lines = message.split("\n");
-                for (String line : lines) {
-                    System.out.println("     " + line);
-                }
-            }
-            showLine();
-            System.out.println();
+            printCliOutput(messages);
         }
+    }
+
+    private void printGuiOutput(String[] messages) {
+        for (String message : messages) {
+            outputBuffer.append(message).append("\n");
+        }
+    }
+
+    private void printCliOutput(String[] messages) {
+        showLine();
+        for (String message : messages) {
+            String[] lines = message.split("\n");
+            for (String line : lines) {
+                System.out.println("     " + line);
+            }
+        }
+        showLine();
+        System.out.println();
     }
 
     /**
