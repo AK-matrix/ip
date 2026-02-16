@@ -58,39 +58,33 @@ public class Parser {
         }
 
         switch (commandWord) {
-        case COMMAND_BYE:
-            return new ExitCommand();
-        case COMMAND_LIST:
-            return new ListCommand();
-        case COMMAND_MARK:
-            return prepareMarkCommand(parts);
-        case COMMAND_UNMARK:
-            return prepareUnmarkCommand(parts);
-        case COMMAND_DELETE:
-            return prepareDeleteCommand(parts);
-        case COMMAND_FIND:
-            return prepareFindCommand(parts);
-        case COMMAND_TODO:
-        case COMMAND_DEADLINE:
-        case COMMAND_EVENT:
-            return prepareTaskCommand(commandWord, parts);
-        default:
-            throw new AkException("I'm sorry, but I don't know what that means :-(");
+            case COMMAND_BYE:
+                return new ExitCommand();
+            case COMMAND_LIST:
+                return new ListCommand();
+            case COMMAND_MARK:
+                return prepareMarkCommand(parts);
+            case COMMAND_UNMARK:
+                return prepareUnmarkCommand(parts);
+            case COMMAND_DELETE:
+                return prepareDeleteCommand(parts);
+            case COMMAND_FIND:
+                return prepareFindCommand(parts);
+            case COMMAND_TODO:
+            case COMMAND_DEADLINE:
+            case COMMAND_EVENT:
+                return prepareTaskCommand(commandWord, parts);
+            default:
+                throw new AkException("I'm sorry, but I don't know what that means :-(");
         }
     }
 
     private static boolean isContactCommand(String commandWord, String[] parts) {
-        if (commandWord.equals("add") && parts.length > 1 && parts[1].startsWith("contact")) {
-            return true;
-        }
         if (commandWord.equals("contact")) {
             return true;
         }
-        if (commandWord.equals("delete") && parts.length > 1 && parts[1].startsWith("contact")) {
-            return true;
-        }
-        if (commandWord.equals("edit") && parts.length > 1 && parts[1].startsWith("contact")) {
-            return true;
+        if (parts.length > 1 && parts[1].startsWith("contact")) {
+            return commandWord.equals("add") || commandWord.equals("delete") || commandWord.equals("edit");
         }
         return false;
     }
@@ -277,7 +271,7 @@ public class Parser {
     /**
      * Extracts an argument value given a prefix.
      *
-     * @param text The full text.
+     * @param text   The full text.
      * @param prefix The argument prefix (e.g., "n/").
      * @return The extracted argument value, or null if not found.
      */
