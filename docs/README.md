@@ -3,7 +3,7 @@
 
 AK is a powerful task management chatbot wrapped in a **Game of Thrones** aesthetic. It serves as your personal Hand of the Code, managing your tasks and contacts with the wit of Tyrion Lannister and the precision of a Maester.
 
-![GUI Mockup](../images/got_background.png)
+![GUI Mockup](Ui.png)
 
 ## 📖 Table of Contents
 *   [Quick Start](#quick-start)
@@ -18,7 +18,7 @@ AK is a powerful task management chatbot wrapped in a **Game of Thrones** aesthe
 ## ⚡ Quick Start
 
 1.  Ensure you have Java `17` or above installed.
-2.  Download the latest `ak.jar`.
+2.  Download the latest `ak.jar` from the [latest release](https://github.com/AK-matrix/ip/releases/tag/A-Release/ak.jar).
 3.  Double-click the file to summon AK.
 4.  Type commands in the box and press Enter. AK will respond in kind.
 
@@ -34,15 +34,21 @@ Adds a simple task to your list.
 *   **Format:** `todo <description>`
 *   **Example:** `todo Pay the Iron Price`
 
+---
+
 #### 2. Deadline (`deadline`)
 Adds a task that must be done by a specific time.
 *   **Format:** `deadline <description> /by <yyyy-MM-dd HHmm>`
 *   **Example:** `deadline Pay debts to Iron Bank /by 2024-12-31 2359`
 
+---
+
 #### 3. Event (`event`)
 Adds a task that occurs within a time frame.
 *   **Format:** `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
 *   **Example:** `event Tourney of the Hand /from 2024-06-01 1200 /to 2024-06-01 1800`
+
+---
 
 ### Managing Tasks
 
@@ -50,20 +56,28 @@ Adds a task that occurs within a time frame.
 Displays all pending and completed burdens.
 *   **Format:** `list`
 
+---
+
 #### 5. Mark as Done (`mark`)
 Marks a task as completed. *"A debt paid."*
 *   **Format:** `mark <index>`
 *   **Example:** `mark 1`
+
+---
 
 #### 6. Mark as Not Done (`unmark`)
 Marks a task as incomplete.
 *   **Format:** `unmark <index>`
 *   **Example:** `unmark 1`
 
+---
+
 #### 7. Delete (`delete`)
 Permanently removes a task. *"Sent to the Wall."*
 *   **Format:** `delete <index>`
 *   **Example:** `delete 3`
+
+---
 
 ### The Address Book
 *"A girl has no name... but your contacts must."*
@@ -73,19 +87,27 @@ Adds a person to your contact list.
 *   **Format:** `add contact n/<name> [p/<phone>] [e/<email>] [i/<info>]`
 *   **Example:** `add contact n/Jon Snow p/12345678 e/jon@wall.com i/Knows nothing`
 
+---
+
 #### 9. List Contacts (`contact list`)
 Displays your allies and enemies.
 *   **Format:** `contact list`
+
+---
 
 #### 10. Edit Contact (`edit contact`)
 Updates an existing contact.
 *   **Format:** `edit contact <index> [n/<new_name>] [p/<new_phone>] ...`
 *   **Example:** `edit contact 1 n/Aegon Targaryen`
 
+---
+
 #### 11. Delete Contact (`delete contact`)
 Removes a contact.
 *   **Format:** `delete contact <index>`
 *   **Example:** `delete contact 2`
+
+---
 
 ### Finding Things
 
@@ -93,6 +115,8 @@ Removes a contact.
 Searches for tasks containing a keyword.
 *   **Format:** `find <keyword>`
 *   **Example:** `find Dragon`
+
+---
 
 #### 13. Exit (`bye`)
 Ends your watch.
