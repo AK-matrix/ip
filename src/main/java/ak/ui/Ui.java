@@ -157,7 +157,7 @@ public class Ui {
      * Prints the contact added confirmation.
      *
      * @param contact The contact that was added.
-     * @param size    The current size of the contact list.
+     * @param size The current size of the contact list.
      */
     public void showContactAdded(ak.contact.Contact contact, int size) {
         printOutput("A new burden for the realm.\nI've added this contact:\n  " + contact + "\n Now you have " + size
@@ -168,7 +168,7 @@ public class Ui {
      * Prints the contact deleted confirmation.
      *
      * @param contact The contact that was deleted.
-     * @param size    The current size of the contact list.
+     * @param size The current size of the contact list.
      */
     public void showContactDeleted(ak.contact.Contact contact, int size) {
         printOutput("Sent to the Wall.\nI've removed this contact:\n  " + contact + "\n Now you have " + size
