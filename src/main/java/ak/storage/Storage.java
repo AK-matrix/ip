@@ -64,23 +64,23 @@ public class Storage {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
                 switch (type) {
-                case "T":
-                    task = new Todo(description);
-                    break;
-                case "D":
-                    if (parts.length >= 4) {
-                        task = new Deadline(description, LocalDateTime.parse(parts[3], formatter));
-                    }
-                    break;
-                case "E":
-                    if (parts.length >= 5) {
-                        task = new Event(description, LocalDateTime.parse(parts[3], formatter),
-                                LocalDateTime.parse(parts[4], formatter));
-                    }
-                    break;
-                default:
-                    // Unknown task type, skip
-                    break;
+                    case "T":
+                        task = new Todo(description);
+                        break;
+                    case "D":
+                        if (parts.length >= 4) {
+                            task = new Deadline(description, LocalDateTime.parse(parts[3], formatter));
+                        }
+                        break;
+                    case "E":
+                        if (parts.length >= 5) {
+                            task = new Event(description, LocalDateTime.parse(parts[3], formatter),
+                                    LocalDateTime.parse(parts[4], formatter));
+                        }
+                        break;
+                    default:
+                        // Unknown task type, skip
+                        break;
                 }
 
                 if (task != null) {
@@ -135,6 +135,7 @@ public class Storage {
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
+                // Use limit -1 to preserve trailing empty strings (e.g. empty info/phone)
                 String[] parts = line.split(" \\| ", -1);
 
                 if (parts.length < 5 || !parts[0].equals("C")) {
