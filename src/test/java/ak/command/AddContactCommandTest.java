@@ -27,7 +27,7 @@ public class AddContactCommandTest {
         TaskList tasks = new TaskList();
         Ui ui = new Ui();
         ui.setGuiMode(true); // Capture output in buffer
-        Storage storage = new Storage("temp_contact_test_storage.txt");
+        Storage storage = new Storage("temp_contact_test_storage.txt", "temp_add_contacts.txt");
 
         // Duplicate Contact
         AddContactCommand dCommand = new AddContactCommand(contact2);
@@ -43,6 +43,6 @@ public class AddContactCommandTest {
 
         // Cleanup
         new File("temp_contact_test_storage.txt").delete();
-        new File("data/contacts.txt").delete();
+        new File("temp_add_contacts.txt").delete();
     }
 }

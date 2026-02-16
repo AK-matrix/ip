@@ -252,7 +252,7 @@ public class Parser {
         try {
             index = Integer.parseInt(parts[0]) - 1;
         } catch (NumberFormatException e) {
-            throw new AkException("Please enter a valid contact number.");
+            throw new AkException("Please enter a valid contact index (number).");
         }
 
         String details = parts[1];

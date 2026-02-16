@@ -18,25 +18,19 @@ import ak.task.Todo;
 public class StorageTest {
 
     private static final String TEST_FILE_PATH = "test_data.txt";
-    private static final String TEST_CONTACT_FILE_PATH = "data/contacts.txt";
+    private static final String TEST_CONTACT_FILE_PATH = "test_contacts.txt";
 
     private Storage storage;
 
     @BeforeEach
     public void setUp() {
-        storage = new Storage(TEST_FILE_PATH);
+        storage = new Storage(TEST_FILE_PATH, TEST_CONTACT_FILE_PATH);
     }
 
     @AfterEach
     public void tearDown() {
         new File(TEST_FILE_PATH).delete();
-        // Be careful not to delete real contact data if possible, but for now
-        // we are testing in a controlled env.
-        // Since Storage hardcodes contact path, we might be overwriting.
-        // Ideally Storage should accept contact file path in constructor.
-        // For this test, we assume we can overwrite or we should backup.
-        // Given the instructions, I will proceed but might want to refactor
-        // Storage later to accept contact path.
+        new File(TEST_CONTACT_FILE_PATH).delete();
     }
 
     @Test
@@ -69,5 +63,17 @@ public class StorageTest {
         assertEquals(2, tasks.size());
         assertEquals("[T][ ] read book", tasks.get(0).toString());
         assertEquals("[T][X] write code", tasks.get(1).toString());
+    }
+
+    @Test
+    public void saveAndLoad_validContacts_success() {
+        ArrayList<ak.contact.Contact> contacts = new ArrayList<>();
+        contacts.add(new ak.contact.Contact("Alice", "a@a.com", "12345", "Friend"));
+        storage.saveContacts(contacts);
+
+        ArrayList<ak.contact.Contact> loadedContacts = storage.loadContacts();
+        assertEquals(1, loadedContacts.size());
+        assertEquals("Alice", loadedContacts.get(0).getName());
+        assertEquals("a@a.com", loadedContacts.get(0).getEmail());
     }
 }

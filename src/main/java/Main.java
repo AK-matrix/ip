@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private AK ak = new AK("./data/ak.txt");
+    private AK ak = new AK("./data/ak.txt", "./data/contacts.txt");
 
     @Override
     public void start(Stage stage) {

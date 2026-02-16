@@ -27,7 +27,7 @@ public class AddCommandTest {
         ContactList contacts = new ContactList();
         Ui ui = new Ui();
         ui.setGuiMode(true); // Capture output in buffer
-        Storage storage = new Storage("temp_test_storage.txt");
+        Storage storage = new Storage("temp_test_storage.txt", "temp_contacts.txt");
 
         AddCommand command = new AddCommand(task2);
         command.execute(tasks, contacts, ui, storage);
@@ -39,5 +39,6 @@ public class AddCommandTest {
 
         // Cleanup
         new File("temp_test_storage.txt").delete();
+        new File("temp_contacts.txt").delete();
     }
 }

@@ -13,6 +13,15 @@ import ak.ui.Ui;
 
 public class ContactCommandTest {
 
+    private static final String TEMP_TASK_FILE = "temp_tasks_cmd_test.txt";
+    private static final String TEMP_CONTACT_FILE = "temp_contact_cmd_test.txt";
+
+    @org.junit.jupiter.api.AfterEach
+    public void tearDown() {
+        new java.io.File(TEMP_TASK_FILE).delete();
+        new java.io.File(TEMP_CONTACT_FILE).delete();
+    }
+
     @Test
     public void execute_deleteContact_success() throws ak.exception.AkException {
         ContactList contacts = new ContactList();
@@ -21,7 +30,7 @@ public class ContactCommandTest {
         TaskList tasks = new TaskList();
         Ui ui = new Ui();
         ui.setGuiMode(true);
-        Storage storage = new Storage("temp_contact_cmd_test.txt");
+        Storage storage = new Storage(TEMP_TASK_FILE, TEMP_CONTACT_FILE);
 
         DeleteContactCommand command = new DeleteContactCommand(0);
         command.execute(tasks, contacts, ui, storage);
@@ -38,7 +47,7 @@ public class ContactCommandTest {
         TaskList tasks = new TaskList();
         Ui ui = new Ui();
         ui.setGuiMode(true);
-        Storage storage = new Storage("temp_contact_cmd_test.txt");
+        Storage storage = new Storage(TEMP_TASK_FILE, TEMP_CONTACT_FILE);
 
         EditContactCommand command = new EditContactCommand(0, "Bob", null, null, null);
         command.execute(tasks, contacts, ui, storage);
@@ -55,7 +64,7 @@ public class ContactCommandTest {
         TaskList tasks = new TaskList();
         Ui ui = new Ui();
         ui.setGuiMode(true);
-        Storage storage = new Storage("temp_contact_cmd_test.txt");
+        Storage storage = new Storage(TEMP_TASK_FILE, TEMP_CONTACT_FILE);
 
         ListContactCommand command = new ListContactCommand();
         command.execute(tasks, contacts, ui, storage);

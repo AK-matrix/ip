@@ -18,15 +18,19 @@ import ak.task.Todo;
  */
 public class Storage {
     private String filePath;
+    private String contactFilePath;
 
     /**
      * Constructs a Storage object.
      *
-     * @param filePath The path to the file where data is stored.
+     * @param filePath The path to the file where task data is stored.
+     * @param contactFilePath The path to the file where contact data is stored.
      */
-    public Storage(String filePath) {
+    public Storage(String filePath, String contactFilePath) {
         assert filePath != null && !filePath.isEmpty() : "File path cannot be null or empty";
+        assert contactFilePath != null && !contactFilePath.isEmpty() : "Contact file path cannot be null or empty";
         this.filePath = filePath;
+        this.contactFilePath = contactFilePath;
     }
 
     /**
@@ -121,7 +125,7 @@ public class Storage {
      */
     public ArrayList<ak.contact.Contact> loadContacts() {
         ArrayList<ak.contact.Contact> contacts = new ArrayList<>();
-        File file = new File("./data/contacts.txt");
+        File file = new File(contactFilePath);
 
         // create directory if it doesn't exist
         if (file.getParentFile() != null && !file.getParentFile().exists()) {
@@ -163,7 +167,7 @@ public class Storage {
      * @param contacts The list of contacts to save.
      */
     public void saveContacts(ArrayList<ak.contact.Contact> contacts) {
-        File file = new File("./data/contacts.txt");
+        File file = new File(contactFilePath);
         try (FileWriter writer = new FileWriter(file)) {
             for (ak.contact.Contact contact : contacts) {
                 writer.write(contact.toFileString() + System.lineSeparator());

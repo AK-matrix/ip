@@ -17,6 +17,7 @@ import ak.ui.Ui;
 public class AK {
 
     private static final String FILE_PATH = "./data/ak.txt";
+    private static final String CONTACT_FILE_PATH = "./data/contacts.txt";
     private Storage storage;
     private TaskList tasks;
     private ak.contact.ContactList contacts;
@@ -25,11 +26,12 @@ public class AK {
     /**
      * Constructs a new AK chatbot instance.
      *
-     * @param filePath The file path for data storage.
+     * @param filePath The file path for task data storage.
+     * @param contactFilePath The file path for contact data storage.
      */
-    public AK(String filePath) {
+    public AK(String filePath, String contactFilePath) {
         ui = new Ui();
-        storage = new Storage(filePath);
+        storage = new Storage(filePath, contactFilePath);
         try {
             tasks = new TaskList(storage.load());
         } catch (Exception e) {
@@ -94,6 +96,6 @@ public class AK {
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        new AK(FILE_PATH).run();
+        new AK(FILE_PATH, CONTACT_FILE_PATH).run();
     }
 }

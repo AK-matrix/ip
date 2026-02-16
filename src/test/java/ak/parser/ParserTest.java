@@ -74,6 +74,16 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_editContactInvalidIndex_throwsException() {
+        try {
+            Parser.parse("edit contact Bob n/Alice");
+            fail("Expected AkException was not thrown");
+        } catch (AkException e) {
+            assertEquals("Please enter a valid contact index (number).", e.getMessage());
+        }
+    }
+
+    @Test
     public void parse_missingArguments_throwsException() {
         assertThrows(AkException.class, () -> Parser.parse("mark"));
         assertThrows(AkException.class, () -> Parser.parse("delete"));
