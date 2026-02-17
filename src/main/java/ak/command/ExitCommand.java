@@ -11,7 +11,7 @@ public class ExitCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) {
-        // No execution logic needed, handled by isExit()
+        ui.showExit();
     }
 
     @Override

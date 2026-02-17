@@ -70,10 +70,17 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().addAll(userDialog, dukeDialog);
         userInput.clear();
 
-        if (input.equals("bye")) {
+        if (input.trim().equals("bye")) {
+            // Disable input to prevent further interaction
+            userInput.setDisable(true);
+            sendButton.setDisable(true);
+
             javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(
                     javafx.util.Duration.seconds(1.5));
-            delay.setOnFinished(event -> javafx.application.Platform.exit());
+            delay.setOnFinished(event -> {
+                javafx.application.Platform.exit();
+                System.exit(0);
+            });
             delay.play();
         }
     }
