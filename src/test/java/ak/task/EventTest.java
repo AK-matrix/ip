@@ -18,12 +18,12 @@ public class EventTest {
     @Test
     public void constructor_invalidDates_throwsException() {
         assertThrows(DateTimeParseException.class, () ->
-                new Event("description", "2023-02-30 1000", "2023-10-10 1200"));
+                     new Event("description", "2023-02-30 1000", "2023-10-10 1200"));
     }
 
     @Test
     public void constructor_startAfterEnd_throwsException() {
         assertThrows(java.time.format.DateTimeParseException.class, () ->
-                new Event("Project meeting", "invalid", "2023-12-02 1400"));
+                     new Event("Project meeting", "invalid", "2023-12-02 1400"));
     }
 }

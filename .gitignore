@@ -2,7 +2,6 @@
 /.idea/
 /out/
 /*.iml
-eclipse-formatter.xml
 
 # Compiled Java files
 *.class

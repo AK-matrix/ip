@@ -276,6 +276,8 @@ public class Parser {
      * @return The extracted argument value, or null if not found.
      */
     private static String extractArgument(String text, String prefix) {
+        assert text != null : "Argument text cannot be null";
+        assert prefix != null && !prefix.isEmpty() : "Argument prefix cannot be null or empty";
         int startIndex = text.indexOf(prefix);
         if (startIndex == -1) {
             return null;

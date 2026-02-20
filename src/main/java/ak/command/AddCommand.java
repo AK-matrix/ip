@@ -17,11 +17,13 @@ public class AddCommand extends Command {
      * @param task The task to be added.
      */
     public AddCommand(Task task) {
+        assert task != null : "Task to add cannot be null";
         this.task = task;
     }
 
     @Override
     public void execute(TaskList tasks, ak.contact.ContactList contacts, Ui ui, Storage storage) {
+        assert tasks != null && ui != null && storage != null : "Execution context cannot be null";
         if (tasks.getAllTasks().contains(task)) {
             ui.showError("This task already plagues your list.");
             return;

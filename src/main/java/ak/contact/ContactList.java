@@ -31,6 +31,7 @@ public class ContactList {
      * @param contact The contact to add.
      */
     public void add(Contact contact) {
+        assert contact != null : "Contact to add cannot be null";
         contacts.add(contact);
     }
 
