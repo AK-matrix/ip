@@ -3,7 +3,9 @@
 
 AK is a powerful task management chatbot wrapped in a **Game of Thrones** aesthetic. It serves as your personal Hand of the Code, managing your tasks and contacts with the wit of Tyrion Lannister and the precision of a Maester.
 
-![GUI Mockup](Ui.png)
+<p align="center">
+  <img src="Ui.png" width="550">
+</p>
 
 ## 📖 Table of Contents
 *   [Quick Start](#quick-start)
